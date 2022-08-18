@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <!-- The above 4 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-
+    <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
     <!-- Title  -->
     <title>Essence - магазин одежды</title>
 
@@ -21,6 +21,7 @@
 </head>
 
 <body>
+    <div id="app">
     <!-- ##### Header Area Start ##### -->
     <header class="header_area">
         <div class="classy-nav-container breakpoint-off d-flex align-items-center justify-content-between">
@@ -41,7 +42,7 @@
                     <!-- Nav Start -->
                     <div class="classynav">
                         <ul>
-                            <li><a href="#">Магазин</a>
+                            <li><a href="#">{{message}}</a>
                                 <div class="megamenu">
                                     <ul class="single-mega cn-col-4">
                                         <li class="title">Женская коллекция</li>
@@ -531,6 +532,7 @@
         </div>
     </footer>
     <!-- ##### Footer Area End ##### -->
+ </div>
 
     <!-- jQuery (Necessary for All JavaScript Plugins) -->
     <script src="js/jquery/jquery-2.2.4.min.js"></script>
@@ -544,6 +546,14 @@
     <script src="js/classy-nav.min.js"></script>
     <!-- Active js -->
     <script src="js/active.js"></script>
+    <script>
+  var app = new Vue({
+  el: '#app',
+  data: {
+    message: 'Shop'
+  }
+})
+</script>
 
 </body>
 
