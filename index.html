@@ -297,7 +297,7 @@
 								
                                 <!-- Product Badge -->
                                 <div v-if="popular[0].oldPrice > 0" class="product-badge offer-badge">
-                                    <span>{{(popular[0].price/popular[0].oldPrice) * 100}}</span>
+                                    <span>{{descount(popular[3].oldPrice, popular[3].price)}}%</span>
                                 </div>
 								
 								<!-- Product Badge -->
@@ -337,7 +337,7 @@
 								
                                 <!-- Product Badge -->
                                 <div v-if="popular[1].oldPrice > 0" class="product-badge offer-badge">
-                                    <span>{{(popular[1].price/popular[1].oldPrice) * 100}}</span>
+                                    <span>{{descount(popular[3].oldPrice, popular[3].price)}}%</span>
                                 </div>
 								
 								<!-- Product Badge -->
@@ -377,7 +377,7 @@
 								
                                 <!-- Product Badge -->
                                 <div v-if="popular[2].oldPrice > 0" class="product-badge offer-badge">
-                                    <span>{{(popular[2].price/popular[2].oldPrice) * 100}}</span>
+                                    <span>{{descount(popular[3].oldPrice, popular[3].price)}}%</span>
                                 </div>
 								
 								<!-- Product Badge -->
@@ -417,7 +417,7 @@
 								
                                 <!-- Product Badge -->
                                 <div v-if="popular[3].oldPrice > 0" class="product-badge offer-badge">
-                                    <span>{{(popular[3].price/popular[3].oldPrice) * 100}}</span>
+                                    <span>{{descount(popular[3].oldPrice, popular[3].price)}}%</span>
                                 </div>
 								
 								<!-- Product Badge -->
@@ -589,6 +589,12 @@
 	      .then(json => this.popular = json.products);
 	  },
 	  computed: {
+	   descount: function () {
+		  var vm = this;
+		  return function (oldPrice, newPrice) {
+			return Math.round((newPrice/oldPrice)*100);
+		  };
+	    },
 	   nev: function () {
 		  var vm = this;
 		  return function (old) {
@@ -596,7 +602,7 @@
 		      return false;
 		    } else {
 		      const now = Date.now();
-		      const time = (now - old) / (1000*60*60*24);
+		      const time = (now - old) / 86400000;
 			  if(time > 30){
 			    return false;
 			  } else {
