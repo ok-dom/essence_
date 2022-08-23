@@ -16,8 +16,8 @@
     <!-- Core Style CSS -->
     <link rel="stylesheet" href="css/core-style.css">
     <link rel="stylesheet" href="style.css">
-	<script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
-    
+	
+
 </head>
 
 <body>
@@ -271,12 +271,12 @@
     <!-- ##### CTA Area End ##### -->
 
     <!-- ##### New Arrivals Area Start ##### -->
-    <section class="new_arrivals_area section-padding-80 clearfix">
+    <section v-if="popular.length" class="new_arrivals_area section-padding-80 clearfix">
         <div class="container">
             <div class="row">
                 <div class="col-12">
                     <div class="section-heading text-center">
-                        <h2>Популярные товары</h2>
+                        <h2>Популярные</h2>
                     </div>
                 </div>
             </div>
@@ -286,22 +286,25 @@
             <div class="row">
                 <div class="col-12">
                     <div class="popular-products-slides owl-carousel">
-
-                        <!-- Single Product -->
+                        
+                        <!-- Single Product 1 -->
                         <div class="single-product-wrapper">
                             <!-- Product Image -->
                             <div class="product-img">
-                                <img src="img/product-img/product-1.jpg" alt="">
+                                <img :src="popular[0].image" alt="">
                                 <!-- Hover Thumb -->
-                                <img class="hover-img" src="img/product-img/product-2.jpg" alt="">
-								<!-- Product Badge -->
-                                <div class="product-badge offer-badge">
-                                    <span>{{product.discount}}</span>
+                                <img class="hover-img" :src="popular[0].image" alt="">
+								
+                                <!-- Product Badge -->
+                                <div v-if="popular[0].oldPrice > 0" class="product-badge offer-badge">
+                                    <span>{{(popular[0].price/popular[0].oldPrice) * 100}}</span>
                                 </div>
+								
 								<!-- Product Badge -->
-                                <div class="product-badge new-badge">
-                                    <span>{{product.new}}</span>
+                                <div v-if="nev(popular[0].new)" class="product-badge new-badge">
+                                    <span>Новый</span>
                                 </div>
+
                                 <!-- Favourite -->
                                 <div class="product-favourite">
                                     <a href="#" class="favme fa fa-heart"></a>
@@ -309,11 +312,131 @@
                             </div>
                             <!-- Product Description -->
                             <div class="product-description">
-                                <span>{{product.brand}}</span>
+                                <span>{{popular[0].brand}}</span>
                                 <a href="single-product-details.html">
-                                    <h6>{{product.title}}</h6>
+                                    <h6>{{popular[0].title}}</h6>
                                 </a>
-                                <p class="product-price"><span class="old-price">{{product.price}}</span> {{product.price}}</p>
+                                <p class="product-price"><span v-if="popular[0].oldPrice > 0" class="old-price">${{popular[0].oldPrice}}</span> ${{popular[0].price}}</p>
+
+                                <!-- Hover Content -->
+                                <div class="hover-content">
+                                    <!-- Add to Cart -->
+                                    <div class="add-to-cart-btn">
+                                        <a href="#" class="btn essence-btn">В корзину</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+						<!-- Single Product 2 -->
+                        <div v-if="popular[1]" class="single-product-wrapper">
+                            <!-- Product Image -->
+                            <div class="product-img">
+                                <img :src="popular[1].image" alt="">
+                                <!-- Hover Thumb -->
+                                <img class="hover-img" :src="popular[1].image" alt="">
+								
+                                <!-- Product Badge -->
+                                <div v-if="popular[1].oldPrice > 0" class="product-badge offer-badge">
+                                    <span>{{(popular[1].price/popular[1].oldPrice) * 100}}</span>
+                                </div>
+								
+								<!-- Product Badge -->
+                                <div v-if="nev(popular[1].new)" class="product-badge new-badge">
+                                    <span>Новый</span>
+                                </div>
+
+                                <!-- Favourite -->
+                                <div class="product-favourite">
+                                    <a href="#" class="favme fa fa-heart"></a>
+                                </div>
+                            </div>
+                            <!-- Product Description -->
+                            <div class="product-description">
+                                <span>{{popular[1].brand}}</span>
+                                <a href="single-product-details.html">
+                                    <h6>{{popular[1].title}}</h6>
+                                </a>
+                                <p class="product-price"><span v-if="popular[1].oldPrice > 0" class="old-price">${{popular[1].oldPrice}}</span> ${{popular[1].price}}</p>
+
+                                <!-- Hover Content -->
+                                <div class="hover-content">
+                                    <!-- Add to Cart -->
+                                    <div class="add-to-cart-btn">
+                                        <a href="#" class="btn essence-btn">В корзину</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+						<!-- Single Product 3 -->
+                        <div v-if="popular[2]" class="single-product-wrapper">
+                            <!-- Product Image -->
+                            <div class="product-img">
+                                <img :src="popular[2].image" alt="">
+                                <!-- Hover Thumb -->
+                                <img class="hover-img" :src="popular[0].image" alt="">
+								
+                                <!-- Product Badge -->
+                                <div v-if="popular[2].oldPrice > 0" class="product-badge offer-badge">
+                                    <span>{{(popular[2].price/popular[2].oldPrice) * 100}}</span>
+                                </div>
+								
+								<!-- Product Badge -->
+                                <div v-if="nev(popular[2].new)" class="product-badge new-badge">
+                                    <span>Новый</span>
+                                </div>
+
+                                <!-- Favourite -->
+                                <div class="product-favourite">
+                                    <a href="#" class="favme fa fa-heart"></a>
+                                </div>
+                            </div>
+                            <!-- Product Description -->
+                            <div class="product-description">
+                                <span>{{popular[2].brand}}</span>
+                                <a href="single-product-details.html">
+                                    <h6>{{popular[2].title}}</h6>
+                                </a>
+                                <p class="product-price"><span v-if="popular[2].oldPrice > 0" class="old-price">${{popular[2].oldPrice}}</span> ${{popular[2].price}}</p>
+
+                                <!-- Hover Content -->
+                                <div class="hover-content">
+                                    <!-- Add to Cart -->
+                                    <div class="add-to-cart-btn">
+                                        <a href="#" class="btn essence-btn">В корзину</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+						<!-- Single Product 4 -->
+                        <div v-if="popular[3]" class="single-product-wrapper">
+                            <!-- Product Image -->
+                            <div class="product-img">
+                                <img :src="popular[3].image" alt="">
+                                <!-- Hover Thumb -->
+                                <img class="hover-img" :src="popular[3].image" alt="">
+								
+                                <!-- Product Badge -->
+                                <div v-if="popular[3].oldPrice > 0" class="product-badge offer-badge">
+                                    <span>{{(popular[3].price/popular[3].oldPrice) * 100}}</span>
+                                </div>
+								
+								<!-- Product Badge -->
+                                <div v-if="nev(popular[3].new)" class="product-badge new-badge">
+                                    <span>Новый</span>
+                                </div>
+
+                                <!-- Favourite -->
+                                <div class="product-favourite">
+                                    <a href="#" class="favme fa fa-heart"></a>
+                                </div>
+                            </div>
+                            <!-- Product Description -->
+                            <div class="product-description">
+                                <span>{{popular[3].brand}}</span>
+                                <a href="single-product-details.html">
+                                    <h6>{{popular[3].title}}</h6>
+                                </a>
+                                <p class="product-price"><span v-if="popular[3].oldPrice > 0" class="old-price">${{popular[3].oldPrice}}</span> ${{popular[3].price}}</p>
 
                                 <!-- Hover Content -->
                                 <div class="hover-content">
@@ -430,7 +553,7 @@
                 <div class="col-md-12 text-center">
                     <p>
                         <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-    Copyright &copy; All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+    Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
     <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
                     </p>
                 </div>
@@ -438,8 +561,8 @@
 
         </div>
     </footer>
-	</div>
     <!-- ##### Footer Area End ##### -->
+	</div>
     
     <!-- jQuery (Necessary for All JavaScript Plugins) -->
     <script src="js/jquery/jquery-2.2.4.min.js"></script>
@@ -453,24 +576,38 @@
     <script src="js/classy-nav.min.js"></script>
     <!-- Active js -->
     <script src="js/active.js"></script>
-	<script>
-	  new Vue({
-  el: '#app',
-  data() {
-    return {
-      product: null
-    };
-  },
-  mounted() {
-    axios
-      .get('https://raw.githubusercontent.com/ok-dom/json/main/essence_/essence.json')
-      .then(response => {
-        this.product = response.product;
-      });
-  }
-});
-	</script>
     
 </body>
-
+<script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+	<script>
+	new Vue({
+	  el: "#app",
+	  data: {
+		popular:[],
+	  },
+	  mounted() {
+	    fetch('https://raw.githubusercontent.com/ok-dom/json/main/essence_/essence.json')
+	      .then(response => response.json())
+	      .then(json => this.popular = json.products);
+	  },
+	  computed: {
+	   nev: function () {
+		  var vm = this;
+		  return function (old) {
+			if(old === 0){
+		      return false;
+		    } else {
+		      const now = Date.now();
+		      const time = (now - old) / (1000*60*60*24);
+			  if(time > 30){
+			    return false;
+			  } else {
+			    return true;
+			  }
+		    }
+		  };
+	    }
+	  }
+	});
+	</script>
 </html>
