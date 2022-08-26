@@ -15,7 +15,9 @@
 
     <!-- Core Style CSS -->
     <link rel="stylesheet" href="css/core-style.css">
+	<link rel="stylesheet" href="css/add-style.css">
     <link rel="stylesheet" href="style.css">
+	<script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
 
 </head>
 
@@ -40,49 +42,8 @@
                     <!-- Nav Start -->
                     <div class="classynav">
                         <ul>
-                            <li><a href="#">{{message}}</a>
-                                <div class="megamenu">
-                                    <ul class="single-mega cn-col-4">
-                                        <li class="title">Женская коллекция</li>
-                                        <li><a href="shop.html">Платья</a></li>
-                                        <li><a href="shop.html">Блузки &amp; Рубашки</a></li>
-                                        <li><a href="shop.html">Футболки</a></li>
-                                        <li><a href="shop.html">Комбинезоны</a></li>
-                                        <li><a href="shop.html">Бюстгальтеры &amp; Трусики</a></li>
-                                    </ul>
-                                    <ul class="single-mega cn-col-4">
-                                        <li class="title">Мужская коллекция</li>
-                                        <li><a href="shop.html">Футболки</a></li>
-                                        <li><a href="shop.html">Поло</a></li>
-                                        <li><a href="shop.html">Рубашки</a></li>
-                                        <li><a href="shop.html">Куртки</a></li>
-                                        <li><a href="shop.html">Тренч</a></li>
-                                    </ul>
-                                    <ul class="single-mega cn-col-4">
-                                        <li class="title">Детская коллекция</li>
-                                        <li><a href="shop.html">Платья</a></li>
-                                        <li><a href="shop.html">Рубашки</a></li>
-                                        <li><a href="shop.html">Футболки</a></li>
-                                        <li><a href="shop.html">Куртки</a></li>
-                                        <li><a href="shop.html">Тренч</a></li>
-                                    </ul>
-                                    <div class="single-mega cn-col-4">
-                                        <img src="img/bg-img/bg-6.jpg" alt="">
-                                    </div>
-                                </div>
-                            </li>
-                            <li><a href="#">Страницы</a>
-                                <ul class="dropdown">
-                                    <li><a href="index.html">Главная</a></li>
-                                    <li><a href="shop.html">Магазин</a></li>
-                                    <li><a href="single-product-details.html">О продукте</a></li>
-                                    <li><a href="checkout.html">Оформление</a></li>
-                                    <li><a href="blog.html">Блог</a></li>
-                                    <li><a href="single-blog.html">Единый блог</a></li>
-                                    <li><a href="regular-page.html">Обычная страница</a></li>
-                                    <li><a href="contact.html">Контакты</a></li>
-                                </ul>
-                            </li>
+                            <li><a href="index.html">Главная</a></li>
+                            <li><a href="shop.html">Магазин</a></li>
                             <li><a href="blog.html">Блог</a></li>
                             <li><a href="contact.html">Контакты</a></li>
                         </ul>
@@ -117,7 +78,7 @@
         </div>
     </header>
     <!-- ##### Header Area End ##### -->
-        
+    <div id="shop">    
     <!-- ##### Right Side Cart Area ##### -->
     <div class="cart-bg-overlay"></div>
 
@@ -232,51 +193,24 @@
                                     <li data-toggle="collapse" data-target="#clothing">
                                         <a href="#">одежда</a>
                                         <ul class="sub-menu collapse show" id="clothing">
-                                            <li><a href="#">Все</a></li>
-                                            <li><a href="#">Боди</a></li>
-                                            <li><a href="#">Платья</a></li>
-                                            <li><a href="#">Толстовки</a></li>
-                                            <li><a href="#">Куртки и Пальто</a></li>
-                                            <li><a href="#">Джинсы</a></li>
-                                            <li><a href="#">Брюки и Леггинсы</a></li>
-                                            <li><a href="#">Комбинезоны</a></li>
-                                            <li><a href="#">Рубашки и Блузки</a></li>
-                                            <li><a href="#">Рубашки</a></li>
-                                            <li><a href="#">Свитера</a></li>
+                                            <li @click="sortCategory('ОДЕЖДА')"><a href="#">Все</a></li>
+                                            <li v-for="item in clothingTitle" :key="item" @click="sortClothing(item)"><a href="#">{{item}}</a></li>
                                         </ul>
                                     </li>
                                     <!-- Single Item -->
                                     <li data-toggle="collapse" data-target="#shoes" class="collapsed">
-                                        <a href="#">shoes</a>
+                                        <a href="#">обувь</a>
                                         <ul class="sub-menu collapse" id="shoes">
-                                            <li><a href="#">Все</a></li>
-                                            <li><a href="#">Боди</a></li>
-                                            <li><a href="#">Платья</a></li>
-                                            <li><a href="#">Толстовки</a></li>
-                                            <li><a href="#">Куртки и Пальто</a></li>
-                                            <li><a href="#">Джинсы</a></li>
-                                            <li><a href="#">Брюки и Леггинсы</a></li>
-                                            <li><a href="#">Комбинезоны</a></li>
-                                            <li><a href="#">Рубашки и Блузки</a></li>
-                                            <li><a href="#">Рубашки</a></li>
-                                            <li><a href="#">Свитера</a></li>
+                                            <li @click="sortCategory('ОБУВЬ')"><a href="#">Все</a></li>
+                                            <li v-for="item in shoesTitle" :key="item" @click="sortShoes(item)"><a href="#">{{item}}</a></li>
                                         </ul>
                                     </li>
                                     <!-- Single Item -->
                                     <li data-toggle="collapse" data-target="#accessories" class="collapsed">
-                                        <a href="#">accessories</a>
+                                        <a href="#">аксессуары</a>
                                         <ul class="sub-menu collapse" id="accessories">
-                                            <li><a href="#">Все</a></li>
-                                            <li><a href="#">Боди</a></li>
-                                            <li><a href="#">Платья</a></li>
-                                            <li><a href="#">Толстовки</a></li>
-                                            <li><a href="#">Куртки и Пальто</a></li>
-                                            <li><a href="#">Джинсы</a></li>
-                                            <li><a href="#">Брюки и Леггинсы</a></li>
-                                            <li><a href="#">Комбинезоны</a></li>
-                                            <li><a href="#">Рубашки и Блузки</a></li>
-                                            <li><a href="#">Рубашки</a></li>
-                                            <li><a href="#">Свитера</a></li>
+                                            <li @click="sortCategory('АКСЕССУАРЫ')"><a href="#">Все</a></li>
+                                            <li v-for="item in accessoriesTitle" :key="item" @click="sortAccessories(item)"><a href="#">{{item}}</a></li>
                                         </ul>
                                     </li>
                                 </ul>
@@ -286,7 +220,7 @@
                         <!-- ##### Single Widget ##### -->
                         <div class="widget price mb-50">
                             <!-- Widget Title -->
-                            <h6 class="widget-title mb-30">Сортировать по</h6>
+                            <h6 class="widget-title mb-30">Сортировать</h6>
                             <!-- Widget Title 2 -->
                             <p class="widget-title2 mb-30">Цена</p>
 
@@ -328,11 +262,7 @@
                             <p class="widget-title2 mb-30">Бренды</p>
                             <div class="widget-desc">
                                 <ul>
-                                    <li><a href="#">Asos</a></li>
-                                    <li><a href="#">Mango</a></li>
-                                    <li><a href="#">River Island</a></li>
-                                    <li><a href="#">Topshop</a></li>
-                                    <li><a href="#">Zara</a></li>
+                                    <li v-for="item in brandsTitle" :key="item" @click="sortBrands(item)"><a href="#">{{item}}</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -346,174 +276,25 @@
                                 <div class="product-topbar d-flex align-items-center justify-content-between">
                                     <!-- Total Products -->
                                     <div class="total-products">
-                                        <p><span>186</span> продукты найдены</p>
+                                        <p>Найдено <span>{{currentProducts.length}}</span></p>
                                     </div>
                                     <!-- Sorting -->
-                                    <div class="product-sorting d-flex">
-                                        <p>Sort by:</p>
-                                        <form action="#" method="get">
-                                            <select name="select" id="sortByselect">
-                                                <option value="value">Наивысший рейтинг</option>
-                                                <option value="value">Новейшие</option>
-                                                <option value="value">Цена: $$ - $</option>
-                                                <option value="value">Цена: $ - $$</option>
-                                            </select>
-                                            <input type="submit" class="d-none" value="">
-                                        </form>
-                                    </div>
+                                    <div class="product-sorting d-flex dropdown">
+									  <p>Выбрать: <span style="color:grey">{{selectText}}</span></p>
+									  <div class="dropdown-content">
+										  <a href="#" @click="selectAll()">Все</a>
+										  <a href="#" @click="selectNews()">Новейшие</a>
+										  <a href="#" @click="selectDiscounts()">Со скидками</a>
+									  </div>
+									</div>
                                 </div>
                             </div>
                         </div>
 
                         <div class="row">
 
-                            <!-- Single Product -->
-                            <div class="col-12 col-sm-6 col-lg-4">
-                                <div class="single-product-wrapper">
-                                    <!-- Product Image -->
-                                    <div class="product-img">
-                                        <img src="img/product-img/product-1.jpg" alt="">
-                                        <!-- Hover Thumb -->
-                                        <img class="hover-img" src="img/product-img/product-2.jpg" alt="">
-
-                                        <!-- Product Badge -->
-                                        <div class="product-badge offer-badge">
-                                            <span>-30%</span>
-                                        </div>
-                                        <!-- Favourite -->
-                                        <div class="product-favourite">
-                                            <a href="#" class="favme fa fa-heart"></a>
-                                        </div>
-                                    </div>
-
-                                    <!-- Product Description -->
-                                    <div class="product-description">
-                                        <span>topshop</span>
-                                        <a href="single-product-details.html">
-                                            <h6>Мини-платье с узлом спереди</h6>
-                                        </a>
-                                        <p class="product-price"><span class="old-price">$75.00</span> $55.00</p>
-
-                                        <!-- Hover Content -->
-                                        <div class="hover-content">
-                                            <!-- Add to Cart -->
-                                            <div class="add-to-cart-btn">
-                                                <a href="#" class="btn essence-btn">В корзину</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Single Product -->
-                            <div class="col-12 col-sm-6 col-lg-4">
-                                <div class="single-product-wrapper">
-                                    <!-- Product Image -->
-                                    <div class="product-img">
-                                        <img src="img/product-img/product-2.jpg" alt="">
-                                        <!-- Hover Thumb -->
-                                        <img class="hover-img" src="img/product-img/product-3.jpg" alt="">
-
-                                        <!-- Favourite -->
-                                        <div class="product-favourite">
-                                            <a href="#" class="favme fa fa-heart"></a>
-                                        </div>
-                                    </div>
-
-                                    <!-- Product Description -->
-                                    <div class="product-description">
-                                        <span>topshop</span>
-                                        <a href="single-product-details.html">
-                                            <h6>Мини-платье с узлом спереди</h6>
-                                        </a>
-                                        <p class="product-price">$80.00</p>
-
-                                        <!-- Hover Content -->
-                                        <div class="hover-content">
-                                            <!-- Add to Cart -->
-                                            <div class="add-to-cart-btn">
-                                                <a href="#" class="btn essence-btn">В корзину</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Single Product -->
-                            <div class="col-12 col-sm-6 col-lg-4">
-                                <div class="single-product-wrapper">
-                                    <!-- Product Image -->
-                                    <div class="product-img">
-                                        <img src="img/product-img/product-3.jpg" alt="">
-                                        <!-- Hover Thumb -->
-                                        <img class="hover-img" src="img/product-img/product-4.jpg" alt="">
-
-                                        <!-- Product Badge -->
-                                        <div class="product-badge new-badge">
-                                            <span>Новый</span>
-                                        </div>
-
-                                        <!-- Favourite -->
-                                        <div class="product-favourite">
-                                            <a href="#" class="favme fa fa-heart"></a>
-                                        </div>
-                                    </div>
-
-                                    <!-- Product Description -->
-                                    <div class="product-description">
-                                        <span>topshop</span>
-                                        <a href="single-product-details.html">
-                                            <h6>Мини-платье с узлом спереди</h6>
-                                        </a>
-                                        <p class="product-price">$80.00</p>
-
-                                        <!-- Hover Content -->
-                                        <div class="hover-content">
-                                            <!-- Add to Cart -->
-                                            <div class="add-to-cart-btn">
-                                                <a href="#" class="btn essence-btn">В корзину</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Single Product -->
-                            <div class="col-12 col-sm-6 col-lg-4">
-                                <div class="single-product-wrapper">
-                                    <!-- Product Image -->
-                                    <div class="product-img">
-                                        <img src="img/product-img/product-4.jpg" alt="">
-                                        <!-- Hover Thumb -->
-                                        <img class="hover-img" src="img/product-img/product-5.jpg" alt="">
-
-                                        <!-- Favourite -->
-                                        <div class="product-favourite">
-                                            <a href="#" class="favme fa fa-heart"></a>
-                                        </div>
-                                    </div>
-
-                                    <!-- Product Description -->
-                                    <div class="product-description">
-                                        <span>topshop</span>
-                                        <a href="single-product-details.html">
-                                            <h6>Мини-платье с узлом спереди</h6>
-                                        </a>
-                                        <p class="product-price">$80.00</p>
-
-                                        <!-- Hover Content -->
-                                        <div class="hover-content">
-                                            <!-- Add to Cart -->
-                                            <div class="add-to-cart-btn">
-                                                <a href="#" class="btn essence-btn">В корзину</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Single Product -->
-                            <div class="col-12 col-sm-6 col-lg-4">
+                          <!-- Single Product -->
+                            <div v-for="product in showProducts" :key="product.id" class="col-12 col-sm-6 col-lg-4">
                                 <div class="single-product-wrapper">
                                     <!-- Product Image -->
                                     <div class="product-img">
@@ -522,80 +303,12 @@
                                         <img class="hover-img" src="img/product-img/product-6.jpg" alt="">
 
                                         <!-- Product Badge -->
-                                        <div class="product-badge offer-badge">
-                                            <span>-30%</span>
+                                        <div v-if="product.oldPrice > 0" class="product-badge offer-badge">
+                                            <span>{{descount(product.oldPrice, product.price)}}%</span>
                                         </div>
-
-                                        <!-- Favourite -->
-                                        <div class="product-favourite">
-                                            <a href="#" class="favme fa fa-heart"></a>
-                                        </div>
-                                    </div>
-
-                                    <!-- Product Description -->
-                                    <div class="product-description">
-                                        <span>topshop</span>
-                                        <a href="single-product-details.html">
-                                            <h6>Мини-платье с узлом спереди</h6>
-                                        </a>
-                                        <p class="product-price"><span class="old-price">$75.00</span> $55.00</p>
-
-                                        <!-- Hover Content -->
-                                        <div class="hover-content">
-                                            <!-- Add to Cart -->
-                                            <div class="add-to-cart-btn">
-                                                <a href="#" class="btn essence-btn">В корзину</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Single Product -->
-                            <div class="col-12 col-sm-6 col-lg-4">
-                                <div class="single-product-wrapper">
-                                    <!-- Product Image -->
-                                    <div class="product-img">
-                                        <img src="img/product-img/product-6.jpg" alt="">
-                                        <!-- Hover Thumb -->
-                                        <img class="hover-img" src="img/product-img/product-7.jpg" alt="">
-
-                                        <!-- Favourite -->
-                                        <div class="product-favourite">
-                                            <a href="#" class="favme fa fa-heart"></a>
-                                        </div>
-                                    </div>
-
-                                    <!-- Product Description -->
-                                    <div class="product-description">
-                                        <span>topshop</span>
-                                        <a href="single-product-details.html">
-                                            <h6>Мини-платье с узлом спереди</h6>
-                                        </a>
-                                        <p class="product-price">$80.00</p>
-
-                                        <!-- Hover Content -->
-                                        <div class="hover-content">
-                                            <!-- Add to Cart -->
-                                            <div class="add-to-cart-btn">
-                                                <a href="#" class="btn essence-btn">В корзину</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Single Product -->
-                            <div class="col-12 col-sm-6 col-lg-4">
-                                <div class="single-product-wrapper">
-                                    <!-- Product Image -->
-                                    <div class="product-img">
-                                        <img src="img/product-img/product-7.jpg" alt="">
-                                        <!-- Hover Thumb -->
-                                        <img class="hover-img" src="img/product-img/product-8.jpg" alt="">
-
-                                        <!-- Product Badge -->
-                                        <div class="product-badge new-badge">
+								
+								        <!-- Product Badge -->
+                                        <div v-if="nev(product.new)" class="product-badge new-badge">
                                             <span>Новый</span>
                                         </div>
 
@@ -607,79 +320,11 @@
 
                                     <!-- Product Description -->
                                     <div class="product-description">
-                                        <span>topshop</span>
+                                        <span>{{product.brand}}</span>
                                         <a href="single-product-details.html">
-                                            <h6>Мини-платье с узлом спереди</h6>
+                                            <h6>{{product.title}}</h6>
                                         </a>
-                                        <p class="product-price">$80.00</p>
-
-                                        <!-- Hover Content -->
-                                        <div class="hover-content">
-                                            <!-- Add to Cart -->
-                                            <div class="add-to-cart-btn">
-                                                <a href="#" class="btn essence-btn">В корзину</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Single Product -->
-                            <div class="col-12 col-sm-6 col-lg-4">
-                                <div class="single-product-wrapper">
-                                    <!-- Product Image -->
-                                    <div class="product-img">
-                                        <img src="img/product-img/product-8.jpg" alt="">
-                                        <!-- Hover Thumb -->
-                                        <img class="hover-img" src="img/product-img/product-9.jpg" alt="">
-                                        
-                                        <!-- Favourite -->
-                                        <div class="product-favourite">
-                                            <a href="#" class="favme fa fa-heart"></a>
-                                        </div>
-                                    </div>
-
-                                    <!-- Product Description -->
-                                    <div class="product-description">
-                                        <span>topshop</span>
-                                        <a href="single-product-details.html">
-                                            <h6>Мини-платье с узлом спереди</h6>
-                                        </a>
-                                        <p class="product-price">$80.00</p>
-
-                                        <!-- Hover Content -->
-                                        <div class="hover-content">
-                                            <!-- Add to Cart -->
-                                            <div class="add-to-cart-btn">
-                                                <a href="#" class="btn essence-btn">В корзину</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Single Product -->
-                            <div class="col-12 col-sm-6 col-lg-4">
-                                <div class="single-product-wrapper">
-                                    <!-- Product Image -->
-                                    <div class="product-img">
-                                        <img src="img/product-img/product-9.jpg" alt="">
-                                        <!-- Hover Thumb -->
-                                        <img class="hover-img" src="img/product-img/product-1.jpg" alt="">
-
-                                        <!-- Favourite -->
-                                        <div class="product-favourite">
-                                            <a href="#" class="favme fa fa-heart"></a>
-                                        </div>
-                                    </div>
-
-                                    <!-- Product Description -->
-                                    <div class="product-description">
-                                        <span>topshop</span>
-                                        <a href="single-product-details.html">
-                                            <h6>Мини-платье с узлом спереди</h6>
-                                        </a>
-                                        <p class="product-price">$80.00</p>
+                                        <p class="product-price"><span class="old-price">${{product.oldPrice}}</span> ${{product.price}}</p>
 
                                         <!-- Hover Content -->
                                         <div class="hover-content">
@@ -697,13 +342,11 @@
                     <!-- Pagination -->
                     <nav aria-label="navigation">
                         <ul class="pagination mt-50 mb-70">
-                            <li class="page-item"><a class="page-link" href="#"><i class="fa fa-angle-left"></i></a></li>
-                            <li class="page-item"><a class="page-link" href="#">1</a></li>
-                            <li class="page-item"><a class="page-link" href="#">2</a></li>
-                            <li class="page-item"><a class="page-link" href="#">3</a></li>
-                            <li class="page-item"><a class="page-link" href="#">...</a></li>
-                            <li class="page-item"><a class="page-link" href="#">21</a></li>
-                            <li class="page-item"><a class="page-link" href="#"><i class="fa fa-angle-right"></i></a></li>
+                            <li @click="pageDecrement" class="page-item"><a class="page-link"><i class="fa fa-angle-left"></i></a></li>
+                            <li class="page-item"><a class="page-link">{{page}}</a></li>
+                            <li class="page-item"><a class="page-link">...</a></li>
+                            <li class="page-item"><a class="page-link">{{Math.ceil(currentProducts.length/6)}}</a></li>
+                            <li @click="pageIncrement" class="page-item"><a class="page-link"><i class="fa fa-angle-right"></i></a></li>
                         </ul>
                     </nav>
                 </div>
@@ -790,6 +433,7 @@
         </div>
     </footer>
     <!-- ##### Footer Area End ##### -->
+    </div>
 
     <!-- jQuery (Necessary for All JavaScript Plugins) -->
     <script src="js/jquery/jquery-2.2.4.min.js"></script>
@@ -803,6 +447,160 @@
     <script src="js/classy-nav.min.js"></script>
     <!-- Active js -->
     <script src="js/active.js"></script>
+	
+	<script>
+	new Vue({
+	  el: "#shop",
+	  data:{
+	    settings:{},
+		products:[],
+		clothingTitle:[],
+		shoesTitle:[],
+		accessoriesTitle:[],
+		brandsTitle:[],
+		currentProducts:[],
+		category:"",
+		subcategory:"",
+		brand:"",
+		newe:false,
+		discount:false,
+		page:1
+	  },
+	  mounted() {
+	    const jsonStr = localStorage.getItem("shop-data");
+		this.settings = JSON.parse(jsonStr).settings;
+		this.products = JSON.parse(jsonStr).products;
+		this.currentProducts = this.products;
+		if(!this.clothingTitle.length || !this.shoesTitle.length || !this.accessoriesTitle.length){
+		  this.products.forEach((item) => {
+		    if(item.category == "ОДЕЖДА"){
+			  if(!this.clothingTitle.includes(item.subcategory)){
+			    this.clothingTitle.push(item.subcategory);
+			  }
+			}
+			else if(item.category == "ОБУВЬ"){
+			  if(!this.shoesTitle.includes(item.subcategory)){
+			    this.shoesTitle.push(item.subcategory);
+			  }
+			}
+			else{
+			  if(!this.accessoriesTitle.includes(item.subcategory)){
+			    this.accessoriesTitle.push(item.subcategory);
+			  }
+			}
+			
+			if(!this.brandsTitle.includes(item.brand)){
+			  this.brandsTitle.push(item.brand);
+			}
+          });
+		}
+	  },
+	  computed: {
+	   descount: function () {
+		  var vm = this;
+		  return function (oldPrice, newPrice) {
+			return Math.round((newPrice/oldPrice)*100);
+		  };
+	    },
+	   nev: function () {
+		  var vm = this;
+		  return function (old) {
+			if(old === 0){
+		      return false;
+		    } else {
+		      const now = Date.now();
+		      const time = (now - old) / 86400000;
+			  if(time > 30){
+			    return false;
+			  } else {
+			    return true;
+			  }
+		    }
+		  };
+	    },
+		showProducts: function () {
+		  return this.currentProducts.slice(this.page * 6 - 6, this.page * 6);
+		},
+		selectText: function(){
+		  return this.newe ? 'Новейшие' : this.discount ? 'Со скидками' : 'Все';
+		},
+	  },
+	  methods:{
+	    sortClothing: function(subcategory){
+		  this.page = 1;
+		  this.category = "ОДЕЖДА";
+		  this.subcategory = subcategory;
+		  this.currentProducts = this.products.filter(product => product.category === this.category && product.subcategory === this.subcategory);
+		},
+		sortShoes: function(subcategory){
+		  this.page = 1;
+		  this.category = "ОБУВЬ";
+		  this.subcategory = subcategory;
+		  this.currentProducts = this.products.filter(product => product.category === this.category && product.subcategory === this.subcategory);
+		},
+		sortAccessories: function(subcategory){
+		  this.page = 1;
+		  this.category = "АКСЕССУАРЫ";
+		  this.subcategory = subcategory;
+		  this.currentProducts = this.products.filter(product => product.category === this.category && product.subcategory === this.subcategory);
+		},
+		sortCategory: function(category){
+		  this.page = 1;
+		  this.category = category;
+		  this.currentProducts = this.products.filter(product => product.category === this.category);
+		},
+		sortBrands: function(brand){
+		  this.page = 1;
+		  this.brand = brand;
+		  this.sort();
+		},
+		selectNews: function(){
+		  this.page = 1;
+		  this.newe = true;
+		  this.discount = false;
+		  this.sort();
+		},
+		selectDiscounts: function(){
+		  this.page = 1;
+		  this.newe = false;
+		  this.discount = true;
+		  this.sort();
+		},
+		selectAll: function(){
+		  this.page = 1;
+		  this.newe = false;
+		  this.discount = false;
+		  this.sort();
+		},
+		sort: function(){
+		  this.currentProducts = this.products;
+		  if(this.category){
+		    this.currentProducts = this.currentProducts.filter(product => product.category === this.category);
+		  }
+		  if(this.subcategory){
+		    this.currentProducts = this.currentProducts.filter(product => product.subcategory === this.subcategory);
+		  }
+		  if(this.brand){
+		    this.currentProducts = this.currentProducts.filter(product => product.brand === this.brand);
+		  }
+		  if(this.newe){
+		    const now = Date.now();
+		    this.currentProducts = this.currentProducts.filter(product => ((now - product.new) / 86400000) < 30);
+		  }
+		  if(this.discount){
+		    this.currentProducts = this.currentProducts.filter(product => product.oldPrice > 0);
+		  }
+		},
+		pageIncrement: function(){
+		  const maxPages = Math.ceil(this.currentProducts.length/6);
+		  if(maxPages > this.page)this.page++;
+		},
+		pageDecrement: function(){
+		  if(1 < this.page)this.page--;
+		}
+	  }
+	});
+	</script>
 </body>
 
 </html>
