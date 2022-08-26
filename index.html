@@ -21,7 +21,6 @@
 </head>
 
 <body>
-    <div id="app">
     <!-- ##### Header Area Start ##### -->
     <header class="header_area">
         <div class="classy-nav-container breakpoint-off d-flex align-items-center justify-content-between">
@@ -42,49 +41,8 @@
                     <!-- Nav Start -->
                     <div class="classynav">
                         <ul>
-                            <li><a href="#">Магазин</a>
-                                <div class="megamenu">
-                                    <ul class="single-mega cn-col-4">
-                                        <li class="title">Женская коллекция</li>
-                                        <li><a href="shop.html">Платья</a></li>
-                                        <li><a href="shop.html">Блузки &amp; Рубашки</a></li>
-                                        <li><a href="shop.html">Футболки</a></li>
-                                        <li><a href="shop.html">Комбинезоны</a></li>
-                                        <li><a href="shop.html">Бюстгальтеры &amp; Трусики</a></li>
-                                    </ul>
-                                    <ul class="single-mega cn-col-4">
-                                        <li class="title">Мужская коллекция</li>
-                                        <li><a href="shop.html">Футболки</a></li>
-                                        <li><a href="shop.html">Поло</a></li>
-                                        <li><a href="shop.html">Рубашки</a></li>
-                                        <li><a href="shop.html">Куртки</a></li>
-                                        <li><a href="shop.html">Тренч</a></li>
-                                    </ul>
-                                    <ul class="single-mega cn-col-4">
-                                        <li class="title">Детская коллекция</li>
-                                        <li><a href="shop.html">Платья</a></li>
-                                        <li><a href="shop.html">Рубашки</a></li>
-                                        <li><a href="shop.html">Футболки</a></li>
-                                        <li><a href="shop.html">Куртки</a></li>
-                                        <li><a href="shop.html">Тренч</a></li>
-                                    </ul>
-                                    <div class="single-mega cn-col-4">
-                                        <img src="img/bg-img/bg-6.jpg" alt="">
-                                    </div>
-                                </div>
-                            </li>
-                            <li><a href="#">Страницы</a>
-                                <ul class="dropdown">
-                                    <li><a href="index.html">Главная</a></li>
-                                    <li><a href="shop.html">Магазин</a></li>
-                                    <li><a href="single-product-details.html">О продукте</a></li>
-                                    <li><a href="checkout.html">Оформление</a></li>
-                                    <li><a href="blog.html">Блог</a></li>
-                                    <li><a href="single-blog.html">Единый блог</a></li>
-                                    <li><a href="regular-page.html">Обычная страница</a></li>
-                                    <li><a href="contact.html">Контакты</a></li>
-                                </ul>
-                            </li>
+                            <li><a href="index.html">Главная</a></li>
+                            <li><a href="shop.html">Магазин</a></li>
                             <li><a href="blog.html">Блог</a></li>
                             <li><a href="contact.html">Контакты</a></li>
                         </ul>
@@ -92,7 +50,6 @@
                     <!-- Nav End -->
                 </div>
             </nav>
-
             <!-- Header Meta Data -->
             <div class="header-meta d-flex clearfix justify-content-end">
                 <!-- Search Area -->
@@ -119,7 +76,7 @@
         </div>
     </header>
     <!-- ##### Header Area End ##### -->
-
+    <div id="home">
     <!-- ##### Right Side Cart Area ##### -->
     <div class="cart-bg-overlay"></div>
 
@@ -207,7 +164,7 @@
             <div class="row h-100 align-items-center">
                 <div class="col-12">
                     <div class="hero-content">
-                        <h6>asoss</h6>
+                        <h1 style="color:grey">{{settings.name}}</h1>
                         <h2>Новая коллекция</h2>
                         <a href="#" class="btn essence-btn">просмотреть коллекцию</a>
                     </div>
@@ -275,7 +232,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-12">
-                    <div class="section-heading text-center">
+                    <div class="section-heading">
                         <h2>Популярные</h2>
                     </div>
                 </div>
@@ -297,7 +254,7 @@
 								
                                 <!-- Product Badge -->
                                 <div v-if="popular[0].oldPrice > 0" class="product-badge offer-badge">
-                                    <span>{{descount(popular[3].oldPrice, popular[3].price)}}%</span>
+                                    <span>{{descount(popular[0].oldPrice, popular[0].price)}}%</span>
                                 </div>
 								
 								<!-- Product Badge -->
@@ -337,7 +294,7 @@
 								
                                 <!-- Product Badge -->
                                 <div v-if="popular[1].oldPrice > 0" class="product-badge offer-badge">
-                                    <span>{{descount(popular[3].oldPrice, popular[3].price)}}%</span>
+                                    <span>{{descount(popular[1].oldPrice, popular[1].price)}}%</span>
                                 </div>
 								
 								<!-- Product Badge -->
@@ -377,7 +334,7 @@
 								
                                 <!-- Product Badge -->
                                 <div v-if="popular[2].oldPrice > 0" class="product-badge offer-badge">
-                                    <span>{{descount(popular[3].oldPrice, popular[3].price)}}%</span>
+                                    <span>{{descount(popular[2].oldPrice, popular[2].price)}}%</span>
                                 </div>
 								
 								<!-- Product Badge -->
@@ -549,12 +506,12 @@
                 </div>
             </div>
 
-<div class="row mt-5">
+            <div class="row mt-5">
                 <div class="col-md-12 text-center">
                     <p>
                         <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-    Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
-    <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                           Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+                        <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
                     </p>
                 </div>
             </div>
@@ -577,16 +534,24 @@
     <!-- Active js -->
     <script src="js/active.js"></script>
     
-	<script>
+    <script>
 	new Vue({
-	  el: "#app",
-	  data: {
-		popular:[],
+	  el: "#home",
+	  data:{
+	    settings:{},
+		popular:[]
 	  },
+	  methods: {
+        increment(){}
+      },
 	  mounted() {
 	    fetch('https://raw.githubusercontent.com/ok-dom/json/main/essence_/essence.json')
 	      .then(response => response.json())
-	      .then(json => this.popular = json.products);
+		  .then(json => localStorage.setItem("shop-data", JSON.stringify(json)));
+	      const jsonStr = localStorage.getItem("shop-data");
+		  this.settings = JSON.parse(jsonStr).settings;
+		  this.popular = JSON.parse(jsonStr).products.filter(product => product.popular);
+		  console.log(this.popular);
 	  },
 	  computed: {
 	   descount: function () {
@@ -614,6 +579,7 @@
 	  }
 	});
 	</script>
+	
 </body>
 
 </html>
