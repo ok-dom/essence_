@@ -63,15 +63,15 @@
                 </div>
                 <!-- Favourite Area -->
                 <div class="favourite-area">
-                    <a href="#"><img src="img/core-img/heart.svg" alt=""></a>
+                    <a><img src="img/core-img/heart.svg" alt=""></a>
                 </div>
                 <!-- User Login Info -->
                 <div class="user-login-info">
-                    <a href="#"><img src="img/core-img/user.svg" alt=""></a>
+                    <a><img src="img/core-img/user.svg" alt=""></a>
                 </div>
                 <!-- Cart Area -->
                 <div class="cart-area">
-                    <a href="#" id="essenceCartBtn"><img src="img/core-img/bag.svg" alt=""> <span>3</span></a>
+                    <a id="essenceCartBtn"><img src="img/core-img/bag.svg" alt=""> <span>3</span></a>
                 </div>
             </div>
 
@@ -86,7 +86,7 @@
 
         <!-- Cart Button -->
         <div class="cart-button">
-            <a href="#" id="rightSideCart"><img src="img/core-img/bag.svg" alt=""> <span>3</span></a>
+            <a id="rightSideCart"><img src="img/core-img/bag.svg" alt=""> <span>3</span></a>
         </div>
 
         <div class="cart-content d-flex">
@@ -95,7 +95,7 @@
             <div class="cart-list">
                 <!-- Single Cart Item -->
                 <div class="single-cart-item">
-                    <a href="#" class="product-image">
+                    <a class="product-image">
                         <img src="img/product-img/product-1.jpg" class="cart-thumb" alt="">
                         <!-- Cart Item Desc -->
                         <div class="cart-item-desc">
@@ -111,7 +111,7 @@
 
                 <!-- Single Cart Item -->
                 <div class="single-cart-item">
-                    <a href="#" class="product-image">
+                    <a class="product-image">
                         <img src="img/product-img/product-2.jpg" class="cart-thumb" alt="">
                         <!-- Cart Item Desc -->
                         <div class="cart-item-desc">
@@ -127,7 +127,7 @@
 
                 <!-- Single Cart Item -->
                 <div class="single-cart-item">
-                    <a href="#" class="product-image">
+                    <a class="product-image">
                         <img src="img/product-img/product-3.jpg" class="cart-thumb" alt="">
                         <!-- Cart Item Desc -->
                         <div class="cart-item-desc">
@@ -166,7 +166,7 @@
             <div class="row h-100 align-items-center">
                 <div class="col-12">
                     <div class="page-title text-center">
-                        <h2>платья</h2>
+                        <h3>{{category}} <span v-show="subcategory" style="color:grey"> > {{subcategory}}</span><span v-show="brand" style="color:#bbbbbb"> > {{brand}}</span></h3>
                     </div>
                 </div>
             </div>
@@ -191,26 +191,26 @@
                                 <ul id="menu-content2" class="menu-content collapse show">
                                     <!-- Single Item -->
                                     <li data-toggle="collapse" data-target="#clothing">
-                                        <a href="#">одежда</a>
+                                        <a>одежда</a>
                                         <ul class="sub-menu collapse show" id="clothing">
-                                            <li @click="sortCategory('ОДЕЖДА')"><a href="#">Все</a></li>
-                                            <li v-for="item in clothingTitle" :key="item" @click="sortClothing(item)"><a href="#">{{item}}</a></li>
+                                            <li><a @click="sortCategory('ОДЕЖДА')">Все</a></li>
+                                            <li><a v-for="(item, i) in clothingTitle" :key="item" @click="sortClothing(item)" :style="subcategory === clothingTitle[i] ? { color: 'blue'} : {}">{{item}}</a></li>
                                         </ul>
                                     </li>
                                     <!-- Single Item -->
                                     <li data-toggle="collapse" data-target="#shoes" class="collapsed">
-                                        <a href="#">обувь</a>
+                                        <a>обувь</a>
                                         <ul class="sub-menu collapse" id="shoes">
-                                            <li @click="sortCategory('ОБУВЬ')"><a href="#">Все</a></li>
-                                            <li v-for="item in shoesTitle" :key="item" @click="sortShoes(item)"><a href="#">{{item}}</a></li>
+                                            <li><a @click="sortCategory('ОБУВЬ')">Все</a></li>
+                                            <li><a v-for="(item, i) in shoesTitle" :key="item" @click="sortShoes(item)" :style="subcategory === shoesTitle[i] ? { color: 'blue'} : {}">{{item}}</a></li>
                                         </ul>
                                     </li>
                                     <!-- Single Item -->
                                     <li data-toggle="collapse" data-target="#accessories" class="collapsed">
-                                        <a href="#">аксессуары</a>
+                                        <a>аксессуары</a>
                                         <ul class="sub-menu collapse" id="accessories">
-                                            <li @click="sortCategory('АКСЕССУАРЫ')"><a href="#">Все</a></li>
-                                            <li v-for="item in accessoriesTitle" :key="item" @click="sortAccessories(item)"><a href="#">{{item}}</a></li>
+                                            <li><a @click="sortCategory('АКСЕССУАРЫ')">Все</a></li>
+                                            <li><a v-for="(item, i) in accessoriesTitle" :key="item" @click="sortAccessories(item)" :style="subcategory === accessoriesTitle[i] ? { color: 'blue'} : {}">{{item}}</a></li>
                                         </ul>
                                     </li>
                                 </ul>
@@ -226,7 +226,7 @@
 
                             <div class="widget-desc">
                                 <div class="slider-range">
-                                    <div data-min="49" data-max="360" data-unit="$" class="slider-range-price ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all" data-value-min="49" data-value-max="360" data-label-result="Range:">
+                                    <div ref="sortprice" data-min="0" data-max="100" data-unit="$" class="slider-range-price ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all" data-value-min="0" data-value-max="100" data-label-result="Range:">
                                         <div class="ui-slider-range ui-widget-header ui-corner-all"></div>
                                         <span class="ui-slider-handle ui-state-default ui-corner-all" tabindex="0"></span>
                                         <span class="ui-slider-handle ui-state-default ui-corner-all" tabindex="0"></span>
@@ -242,16 +242,16 @@
                             <p class="widget-title2 mb-30">Цвет</p>
                             <div class="widget-desc">
                                 <ul class="d-flex">
-                                    <li><a href="#" class="color1"></a></li>
-                                    <li><a href="#" class="color2"></a></li>
-                                    <li><a href="#" class="color3"></a></li>
-                                    <li><a href="#" class="color4"></a></li>
-                                    <li><a href="#" class="color5"></a></li>
-                                    <li><a href="#" class="color6"></a></li>
-                                    <li><a href="#" class="color7"></a></li>
-                                    <li><a href="#" class="color8"></a></li>
-                                    <li><a href="#" class="color9"></a></li>
-                                    <li><a href="#" class="color10"></a></li>
+                                    <li><a @click="sortColor('color1')" class="color1" :style="color === 'color1' ? { border: '3px solid blue'} : {}"></a></li>
+                                    <li><a @click="sortColor('color2')" class="color2" :style="color === 'color2' ? { border: '3px solid blue'} : {}"></a></li>
+                                    <li><a @click="sortColor('color3')" class="color3" :style="color === 'color3' ? { border: '3px solid blue'} : {}"></a></li>
+                                    <li><a @click="sortColor('color4')" class="color4" :style="color === 'color4' ? { border: '3px solid blue'} : {}"></a></li>
+                                    <li><a @click="sortColor('color5')" class="color5" :style="color === 'color5' ? { border: '3px solid blue'} : {}"></a></li>
+                                    <li><a @click="sortColor('color6')" class="color6" :style="color === 'color6' ? { border: '3px solid blue'} : {}"></a></li>
+                                    <li><a @click="sortColor('color7')" class="color7" :style="color === 'color7' ? { border: '3px solid blue'} : {}"></a></li>
+                                    <li><a @click="sortColor('color8')" class="color8" :style="color === 'color8' ? { border: '3px solid blue'} : {}"></a></li>
+                                    <li><a @click="sortColor('color9')" class="color9" :style="color === 'color9' ? { border: '3px solid blue'} : {}"></a></li>
+                                    <li><a @click="sortColor('color10')" class="color10" :style="color === 'color10' ? { border: '3px solid blue'} : {}"></a></li>
                                 </ul>
                             </div>
                         </div>
@@ -262,7 +262,9 @@
                             <p class="widget-title2 mb-30">Бренды</p>
                             <div class="widget-desc">
                                 <ul>
-                                    <li v-for="item in brandsTitle" :key="item" @click="sortBrands(item)"><a href="#">{{item}}</a></li>
+                                    <li><a v-for="(item, i) in brandsTitle" :key="item" @click="sortBrands(item)" :style="brand === brandsTitle[i] ? { color: 'blue'} : {}">
+									{{item}}
+									</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -314,15 +316,15 @@
 
                                         <!-- Favourite -->
                                         <div class="product-favourite">
-                                            <a href="#" class="favme fa fa-heart"></a>
+                                            <a class="favme fa fa-heart"></a>
                                         </div>
                                     </div>
 
                                     <!-- Product Description -->
                                     <div class="product-description">
                                         <span>{{product.brand}}</span>
-                                        <a href="single-product-details.html">
-                                            <h6>{{product.title}}</h6>
+                                        <a href="product-details.html">
+                                            <h6 @click="saveProductInStore(product)">{{product.title}}</h6>
                                         </a>
                                         <p class="product-price"><span class="old-price">${{product.oldPrice}}</span> ${{product.price}}</p>
 
@@ -330,7 +332,7 @@
                                         <div class="hover-content">
                                             <!-- Add to Cart -->
                                             <div class="add-to-cart-btn">
-                                                <a href="#" class="btn essence-btn">В корзину</a>
+                                                <a class="btn essence-btn" style="color:white">В корзину</a>
                                             </div>
                                         </div>
                                     </div>
@@ -345,7 +347,7 @@
                             <li @click="pageDecrement" class="page-item"><a class="page-link"><i class="fa fa-angle-left"></i></a></li>
                             <li class="page-item"><a class="page-link">{{page}}</a></li>
                             <li class="page-item"><a class="page-link">...</a></li>
-                            <li class="page-item"><a class="page-link">{{Math.ceil(currentProducts.length/6)}}</a></li>
+                            <li class="page-item"><a class="page-link">{{pages}}</a></li>
                             <li @click="pageIncrement" class="page-item"><a class="page-link"><i class="fa fa-angle-right"></i></a></li>
                         </ul>
                     </nav>
@@ -364,7 +366,7 @@
                     <div class="single_widget_area d-flex mb-30">
                         <!-- Logo -->
                         <div class="footer-logo mr-50">
-                            <a href="#"><img src="img/core-img/logo2.png" alt=""></a>
+                            <a><img src="img/core-img/logo2.png" alt=""></a>
                         </div>
                         <!-- Footer Menu -->
                         <div class="footer_menu">
@@ -380,12 +382,12 @@
                 <div class="col-12 col-md-6">
                     <div class="single_widget_area mb-30">
                         <ul class="footer_widget_menu">
-                            <li><a href="#">Статус заказа</a></li>
-                            <li><a href="#">Варианты оплаты</a></li>
-                            <li><a href="#">Доставка</a></li>
-                            <li><a href="#">Гиды</a></li>
-                            <li><a href="#">Политика конфиденциальности</a></li>
-                            <li><a href="#">Условия эксплуатации</a></li>
+                            <li><a>Статус заказа</a></li>
+                            <li><a>Варианты оплаты</a></li>
+                            <li><a>Доставка</a></li>
+                            <li><a>Гиды</a></li>
+                            <li><a>Политика конфиденциальности</a></li>
+                            <li><a>Условия эксплуатации</a></li>
                         </ul>
                     </div>
                 </div>
@@ -410,11 +412,11 @@
                 <div class="col-12 col-md-6">
                     <div class="single_widget_area">
                         <div class="footer_social_area">
-                            <a href="#" data-toggle="tooltip" data-placement="top" title="Facebook"><i class="fa fa-facebook" aria-hidden="true"></i></a>
-                            <a href="#" data-toggle="tooltip" data-placement="top" title="Instagram"><i class="fa fa-instagram" aria-hidden="true"></i></a>
-                            <a href="#" data-toggle="tooltip" data-placement="top" title="Twitter"><i class="fa fa-twitter" aria-hidden="true"></i></a>
-                            <a href="#" data-toggle="tooltip" data-placement="top" title="Pinterest"><i class="fa fa-pinterest" aria-hidden="true"></i></a>
-                            <a href="#" data-toggle="tooltip" data-placement="top" title="Youtube"><i class="fa fa-youtube-play" aria-hidden="true"></i></a>
+                            <a data-toggle="tooltip" data-placement="top" title="Facebook"><i class="fa fa-facebook" aria-hidden="true"></i></a>
+                            <a data-toggle="tooltip" data-placement="top" title="Instagram"><i class="fa fa-instagram" aria-hidden="true"></i></a>
+                            <a data-toggle="tooltip" data-placement="top" title="Twitter"><i class="fa fa-twitter" aria-hidden="true"></i></a>
+                            <a data-toggle="tooltip" data-placement="top" title="Pinterest"><i class="fa fa-pinterest" aria-hidden="true"></i></a>
+                            <a data-toggle="tooltip" data-placement="top" title="Youtube"><i class="fa fa-youtube-play" aria-hidden="true"></i></a>
                         </div>
                     </div>
                 </div>
@@ -459,18 +461,20 @@
 		accessoriesTitle:[],
 		brandsTitle:[],
 		currentProducts:[],
-		category:"",
+		category:"ОДЕЖДА",
 		subcategory:"",
+		color:"",
 		brand:"",
 		newe:false,
 		discount:false,
-		page:1
+		page:1,
+		//minPrice:"30"
 	  },
 	  mounted() {
 	    const jsonStr = localStorage.getItem("shop-data");
 		this.settings = JSON.parse(jsonStr).settings;
 		this.products = JSON.parse(jsonStr).products;
-		this.currentProducts = this.products;
+		this.currentProducts = this.products.filter(product => product.category === this.category);
 		if(!this.clothingTitle.length || !this.shoesTitle.length || !this.accessoriesTitle.length){
 		  this.products.forEach((item) => {
 		    if(item.category == "ОДЕЖДА"){
@@ -494,6 +498,7 @@
 			}
           });
 		}
+		this.$refs.sortprice.dataset.valueMin = 50;
 	  },
 	  computed: {
 	   descount: function () {
@@ -524,34 +529,53 @@
 		selectText: function(){
 		  return this.newe ? 'Новейшие' : this.discount ? 'Со скидками' : 'Все';
 		},
-	  },
-	  methods:{
+		pages: function(){
+		  const pages = Math.ceil(this.currentProducts.length/6);
+		  if(pages)return pages;
+		  else return 1;
+		}
+	   },
+	   methods:{
 	    sortClothing: function(subcategory){
-		  this.page = 1;
 		  this.category = "ОДЕЖДА";
 		  this.subcategory = subcategory;
 		  this.currentProducts = this.products.filter(product => product.category === this.category && product.subcategory === this.subcategory);
+		  this.page = 1;
+		  this.color = "";
+		  this.brand = "";
 		},
 		sortShoes: function(subcategory){
-		  this.page = 1;
 		  this.category = "ОБУВЬ";
 		  this.subcategory = subcategory;
 		  this.currentProducts = this.products.filter(product => product.category === this.category && product.subcategory === this.subcategory);
+		  this.page = 1;
+		  this.color = "";
+		  this.brand = "";
 		},
 		sortAccessories: function(subcategory){
-		  this.page = 1;
 		  this.category = "АКСЕССУАРЫ";
 		  this.subcategory = subcategory;
 		  this.currentProducts = this.products.filter(product => product.category === this.category && product.subcategory === this.subcategory);
+		  this.page = 1;
+		  this.color = "";
+		  this.brand = "";
 		},
 		sortCategory: function(category){
-		  this.page = 1;
 		  this.category = category;
+		  this.subcategory = "";
 		  this.currentProducts = this.products.filter(product => product.category === this.category);
+		  this.page = 1;
+		  this.color = "";
+		  this.brand = "";
 		},
 		sortBrands: function(brand){
 		  this.page = 1;
 		  this.brand = brand;
+		  this.sort();
+		},
+		sortColor: function(color){
+		  this.page = 1;
+		  this.color = color;
 		  this.sort();
 		},
 		selectNews: function(){
@@ -580,6 +604,9 @@
 		  if(this.subcategory){
 		    this.currentProducts = this.currentProducts.filter(product => product.subcategory === this.subcategory);
 		  }
+		  if(this.color){
+		    this.currentProducts = this.currentProducts.filter(product => product.color === this.color);
+		  }
 		  if(this.brand){
 		    this.currentProducts = this.currentProducts.filter(product => product.brand === this.brand);
 		  }
@@ -597,6 +624,9 @@
 		},
 		pageDecrement: function(){
 		  if(1 < this.page)this.page--;
+		},
+		saveProductInStore: function(product){
+		  localStorage.setItem("shop-data-product", JSON.stringify(product));
 		}
 	  }
 	});
