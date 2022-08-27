@@ -19,6 +19,14 @@
   display: block;
 }
 
+.select-size {
+  width: 240px;
+  height: 50px;
+  border: 1px solid #d0d0d0;
+  padding: 10px 18px;
+  margin-bottom: 20px;
+}
+
 .dropdown-content a:hover {background-color: #f1f1f1}
 
 .dropdown:hover .dropdown-content {
@@ -27,4 +35,12 @@
 
 .dropdown:hover .dropbtn {
   background-color: #3e8e41;
+}
+
+a:hover {
+  cursor: pointer;
+}
+
+.sort-click {
+  color:#000000;
 }
