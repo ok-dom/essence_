@@ -22,6 +22,7 @@
 </head>
 
 <body>
+    <div id="shop">
     <!-- ##### Header Area Start ##### -->
     <header class="header_area">
         <div class="classy-nav-container breakpoint-off d-flex align-items-center justify-content-between">
@@ -78,7 +79,7 @@
         </div>
     </header>
     <!-- ##### Header Area End ##### -->
-    <div id="shop">    
+        
     <!-- ##### Right Side Cart Area ##### -->
     <div class="cart-bg-overlay"></div>
 
@@ -166,7 +167,13 @@
             <div class="row h-100 align-items-center">
                 <div class="col-12">
                     <div class="page-title text-center">
-                        <h3>{{category}} <span v-show="subcategory" style="color:grey"> > {{subcategory}}</span><span v-show="brand" style="color:#bbbbbb"> > {{brand}}</span></h3>
+                        <h3>
+						  <span style="color:grey; font-size:24px">{{category}}</span>
+						  <span v-show="subcategory" style="color:grey; font-size:22px"> > {{subcategory}}</span>
+						  <span v-show="type" style="color:grey; font-size:20px"> > {{type}}</span>
+						  <span v-show="color" style="color:grey; font-size:18px"> > {{color}}</span>
+						  <span v-show="brand" style="color:grey; font-size:16px"> > {{brand}}</span>
+						</h3>
                     </div>
                 </div>
             </div>
@@ -194,7 +201,7 @@
                                         <a>одежда</a>
                                         <ul class="sub-menu collapse show" id="clothing">
                                             <li><a @click="sortCategory('ОДЕЖДА')">Все</a></li>
-                                            <li><a v-for="(item, i) in clothingTitle" :key="item" @click="sortClothing(item)" :style="subcategory === clothingTitle[i] ? { color: 'blue'} : {}">{{item}}</a></li>
+                                            <li><a v-for="(item, i) in clothingTitle" :key="item" @click="sortSubcategory('ОДЕЖДА', item)" :style="subcategory === clothingTitle[i] ? { color: 'blue'} : {}">{{item}}</a></li>
                                         </ul>
                                     </li>
                                     <!-- Single Item -->
@@ -202,7 +209,7 @@
                                         <a>обувь</a>
                                         <ul class="sub-menu collapse" id="shoes">
                                             <li><a @click="sortCategory('ОБУВЬ')">Все</a></li>
-                                            <li><a v-for="(item, i) in shoesTitle" :key="item" @click="sortShoes(item)" :style="subcategory === shoesTitle[i] ? { color: 'blue'} : {}">{{item}}</a></li>
+                                            <li><a v-for="(item, i) in shoesTitle" :key="item" @click="sortSubcategory('ОБУВЬ', item)" :style="subcategory === shoesTitle[i] ? { color: 'blue'} : {}">{{item}}</a></li>
                                         </ul>
                                     </li>
                                     <!-- Single Item -->
@@ -210,7 +217,7 @@
                                         <a>аксессуары</a>
                                         <ul class="sub-menu collapse" id="accessories">
                                             <li><a @click="sortCategory('АКСЕССУАРЫ')">Все</a></li>
-                                            <li><a v-for="(item, i) in accessoriesTitle" :key="item" @click="sortAccessories(item)" :style="subcategory === accessoriesTitle[i] ? { color: 'blue'} : {}">{{item}}</a></li>
+                                            <li><a v-for="(item, i) in accessoriesTitle" :key="item" @click="sortSubcategory('АКСЕССУАРЫ', item)" :style="subcategory === accessoriesTitle[i] ? { color: 'blue'} : {}">{{item}}</a></li>
                                         </ul>
                                     </li>
                                 </ul>
@@ -221,19 +228,27 @@
                         <div class="widget price mb-50">
                             <!-- Widget Title -->
                             <h6 class="widget-title mb-30">Сортировать</h6>
-                            <!-- Widget Title 2 -->
-                            <p class="widget-title2 mb-30">Цена</p>
-
-                            <div class="widget-desc">
-                                <div class="slider-range">
-                                    <div ref="sortprice" data-min="0" data-max="100" data-unit="$" class="slider-range-price ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all" data-value-min="0" data-value-max="100" data-label-result="Range:">
-                                        <div class="ui-slider-range ui-widget-header ui-corner-all"></div>
-                                        <span class="ui-slider-handle ui-state-default ui-corner-all" tabindex="0"></span>
-                                        <span class="ui-slider-handle ui-state-default ui-corner-all" tabindex="0"></span>
-                                    </div>
-                                    <div class="range-price">Диапазон: $49.00 - $360.00</div>
-                                </div>
-                            </div>
+							
+							<div v-if="isType.isTypeMan || isType.isTypeWoman || isType.isTypeBaby" class="type-product">
+								<ul>
+								  <li @click="sortType('')">
+									<input type="radio" id="t-all" name="selector" :checked="checked">
+									<label for="t-all">Все</label>
+								  </li>
+								  <li v-if="isType.isTypeMan" @click="sortType('Мужская')">
+									<input type="radio" id="t-man" name="selector">
+									<label for="t-man">Мужская</label>
+								  </li>
+								  <li v-if="isType.isTypeWoman" @click="sortType('Женская')">
+									<input type="radio" id="t-woman" name="selector">
+									<label for="t-woman">Женская</label>
+								  </li>
+								  <li v-if="isType.isTypeBaby" @click="sortType('Детская')">
+									<input type="radio" id="t-baby" name="selector">
+									<label for="t-baby">Детская</label>
+								  </li>
+								</ul>
+							</div>
                         </div>
 
                         <!-- ##### Single Widget ##### -->
@@ -242,16 +257,16 @@
                             <p class="widget-title2 mb-30">Цвет</p>
                             <div class="widget-desc">
                                 <ul class="d-flex">
-                                    <li><a @click="sortColor('color1')" class="color1" :style="color === 'color1' ? { border: '3px solid blue'} : {}"></a></li>
-                                    <li><a @click="sortColor('color2')" class="color2" :style="color === 'color2' ? { border: '3px solid blue'} : {}"></a></li>
-                                    <li><a @click="sortColor('color3')" class="color3" :style="color === 'color3' ? { border: '3px solid blue'} : {}"></a></li>
-                                    <li><a @click="sortColor('color4')" class="color4" :style="color === 'color4' ? { border: '3px solid blue'} : {}"></a></li>
-                                    <li><a @click="sortColor('color5')" class="color5" :style="color === 'color5' ? { border: '3px solid blue'} : {}"></a></li>
-                                    <li><a @click="sortColor('color6')" class="color6" :style="color === 'color6' ? { border: '3px solid blue'} : {}"></a></li>
-                                    <li><a @click="sortColor('color7')" class="color7" :style="color === 'color7' ? { border: '3px solid blue'} : {}"></a></li>
-                                    <li><a @click="sortColor('color8')" class="color8" :style="color === 'color8' ? { border: '3px solid blue'} : {}"></a></li>
-                                    <li><a @click="sortColor('color9')" class="color9" :style="color === 'color9' ? { border: '3px solid blue'} : {}"></a></li>
-                                    <li><a @click="sortColor('color10')" class="color10" :style="color === 'color10' ? { border: '3px solid blue'} : {}"></a></li>
+                                    <li><a @click="sortColor('Белый')" class="color1" :style="color === 'Белый' ? { border: '3px solid blue'} : {}"></a></li>
+                                    <li><a @click="sortColor('Серый')" class="color2" :style="color === 'Серый' ? { border: '3px solid blue'} : {}"></a></li>
+                                    <li><a @click="sortColor('Черный')" class="color3" :style="color === 'Черный' ? { border: '3px solid blue'} : {}"></a></li>
+                                    <li><a @click="sortColor('Синий')" class="color4" :style="color === 'Синий' ? { border: '3px solid blue'} : {}"></a></li>
+                                    <li><a @click="sortColor('Красный')" class="color5" :style="color === 'Красный' ? { border: '3px solid blue'} : {}"></a></li>
+                                    <li><a @click="sortColor('Желтый')" class="color6" :style="color === 'Желтый' ? { border: '3px solid blue'} : {}"></a></li>
+                                    <li><a @click="sortColor('Оранжевый')" class="color7" :style="color === 'Оранжевый' ? { border: '3px solid blue'} : {}"></a></li>
+                                    <li><a @click="sortColor('Коричневый')" class="color8" :style="color === 'Коричневый' ? { border: '3px solid blue'} : {}"></a></li>
+                                    <li><a @click="sortColor('Зеленый')" class="color9" :style="color === 'Зеленый' ? { border: '3px solid blue'} : {}"></a></li>
+                                    <li><a @click="sortColor('Фиолетовый')" class="color10" :style="color === 'Фиолетовый' ? { border: '3px solid blue'} : {}"></a></li>
                                 </ul>
                             </div>
                         </div>
@@ -300,9 +315,7 @@
                                 <div class="single-product-wrapper">
                                     <!-- Product Image -->
                                     <div class="product-img">
-                                        <img src="img/product-img/product-5.jpg" alt="">
-                                        <!-- Hover Thumb -->
-                                        <img class="hover-img" src="img/product-img/product-6.jpg" alt="">
+                                        <img :src="product.image" alt="">
 
                                         <!-- Product Badge -->
                                         <div v-if="product.oldPrice > 0" class="product-badge offer-badge">
@@ -332,7 +345,7 @@
                                         <div class="hover-content">
                                             <!-- Add to Cart -->
                                             <div class="add-to-cart-btn">
-                                                <a class="btn essence-btn" style="color:white">В корзину</a>
+                                                <a @click="addBasket(product)" class="btn essence-btn" style="color:white">В корзину</a>
                                             </div>
                                         </div>
                                     </div>
@@ -463,12 +476,17 @@
 		currentProducts:[],
 		category:"ОДЕЖДА",
 		subcategory:"",
+		type:"",
 		color:"",
 		brand:"",
 		newe:false,
 		discount:false,
 		page:1,
-		//minPrice:"30"
+		isType:{
+		  isTypeMan:false,
+		  isTypeWoman:false,
+		  isTypeBaby:false
+		},
 	  },
 	  mounted() {
 	    const jsonStr = localStorage.getItem("shop-data");
@@ -496,9 +514,20 @@
 			if(!this.brandsTitle.includes(item.brand)){
 			  this.brandsTitle.push(item.brand);
 			}
+			
+			if(item.type){
+			  if(item.type === "Мужская" && !this.isType.isTypeMan){
+			    this.isType.isTypeMan = true;
+			  }
+			  else if(item.type === "Женская" && !this.isType.isTypeWoman){
+			    this.isType.isTypeWoman = true;
+			  }
+			  else if(item.type === "Детская" && !this.isType.isTypeBaby){
+			    this.isType.isTypeBaby = true;
+			  }
+			}
           });
 		}
-		this.$refs.sortprice.dataset.valueMin = 50;
 	  },
 	  computed: {
 	   descount: function () {
@@ -533,40 +562,39 @@
 		  const pages = Math.ceil(this.currentProducts.length/6);
 		  if(pages)return pages;
 		  else return 1;
+		},
+		checked: function(){
+		  if(this.type) return false;
+		  else return true;
 		}
 	   },
 	   methods:{
-	    sortClothing: function(subcategory){
-		  this.category = "ОДЕЖДА";
-		  this.subcategory = subcategory;
-		  this.currentProducts = this.products.filter(product => product.category === this.category && product.subcategory === this.subcategory);
-		  this.page = 1;
-		  this.color = "";
-		  this.brand = "";
-		},
-		sortShoes: function(subcategory){
-		  this.category = "ОБУВЬ";
-		  this.subcategory = subcategory;
-		  this.currentProducts = this.products.filter(product => product.category === this.category && product.subcategory === this.subcategory);
-		  this.page = 1;
-		  this.color = "";
-		  this.brand = "";
-		},
-		sortAccessories: function(subcategory){
-		  this.category = "АКСЕССУАРЫ";
-		  this.subcategory = subcategory;
-		  this.currentProducts = this.products.filter(product => product.category === this.category && product.subcategory === this.subcategory);
-		  this.page = 1;
-		  this.color = "";
-		  this.brand = "";
-		},
-		sortCategory: function(category){
+	    sortCategory: function(category){
 		  this.category = category;
 		  this.subcategory = "";
-		  this.currentProducts = this.products.filter(product => product.category === this.category);
-		  this.page = 1;
+		  this.type = "";
 		  this.color = "";
 		  this.brand = "";
+		  this.newe = false;
+		  this.discount = false;
+		  this.currentProducts = this.products.filter(product => product.category === this.category);
+		  this.page = 1;
+		},
+	    sortSubcategory: function(category, subcategory){
+		  this.category = category;
+		  this.subcategory = subcategory;
+		  this.type = "";
+		  this.color = "";
+		  this.brand = "";
+		  this.newe = false;
+		  this.discount = false;
+		  this.currentProducts = this.products.filter(product => product.category === this.category && product.subcategory === this.subcategory);
+		  this.page = 1;
+		},
+		sortType: function(type){
+		  this.page = 1;
+		  this.type = type;
+		  this.sort();
 		},
 		sortBrands: function(brand){
 		  this.page = 1;
@@ -604,6 +632,9 @@
 		  if(this.subcategory){
 		    this.currentProducts = this.currentProducts.filter(product => product.subcategory === this.subcategory);
 		  }
+		  if(this.type){
+		    this.currentProducts = this.currentProducts.filter(product => product.type === this.type);
+		  }
 		  if(this.color){
 		    this.currentProducts = this.currentProducts.filter(product => product.color === this.color);
 		  }
@@ -627,7 +658,18 @@
 		},
 		saveProductInStore: function(product){
 		  localStorage.setItem("shop-data-product", JSON.stringify(product));
-		}
+		},
+		addBasket: function(product){
+		  let products = [];
+		  const jsonStr = localStorage.getItem("shop-data-basket");
+		  if(jsonStr){
+		    products = JSON.parse(jsonStr);
+			products.push(product);
+		  }else{
+		    products[0] = product;
+		  }
+		  localStorage.setItem("shop-data-basket", JSON.stringify(products));
+		},
 	  }
 	});
 	</script>

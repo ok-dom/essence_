@@ -23,6 +23,7 @@
 </head>
 
 <body>
+    <div id="product">
     <!-- ##### Header Area Start ##### -->
     <header class="header_area">
         <div class="classy-nav-container breakpoint-off d-flex align-items-center justify-content-between">
@@ -72,22 +73,22 @@
                 </div>
                 <!-- Cart Area -->
                 <div class="cart-area">
-                    <a href="#" id="essenceCartBtn"><img src="img/core-img/bag.svg" alt=""> <span>3</span></a>
+                    <a @click="showBasket = !showBasket"><img src="img/core-img/bag.svg" alt=""> <span>3</span></a>
                 </div>
             </div>
 
         </div>
     </header>
     <!-- ##### Header Area End ##### -->
-    <div id="product">
+	
     <!-- ##### Right Side Cart Area ##### -->
-    <div class="cart-bg-overlay"></div>
+    <div class="cart-bg-overlay" :class="{'cart-bg-overlay-on':showBasket}"></div>
 
-    <div class="right-side-cart-area">
+    <div class="right-side-cart-area" :class="{'cart-on':showBasket}">
 
         <!-- Cart Button -->
         <div class="cart-button">
-            <a href="#" id="rightSideCart"><img src="img/core-img/bag.svg" alt=""> <span>3</span></a>
+            <a @click="showBasket = !showBasket"><img src="img/core-img/bag.svg" alt=""> <span>3</span></a>
         </div>
 
         <div class="cart-content d-flex">
@@ -95,49 +96,17 @@
             <!-- Cart List Area -->
             <div class="cart-list">
                 <!-- Single Cart Item -->
-                <div class="single-cart-item">
+                <div v-for="basketProduct in basketProducts" :key="basketProduct.id" class="single-cart-item">
                     <a href="#" class="product-image">
-                        <img src="img/product-img/product-1.jpg" class="cart-thumb" alt="">
+                        <img :src="basketProduct.image" class="cart-thumb" alt="">
                         <!-- Cart Item Desc -->
                         <div class="cart-item-desc">
                           <span class="product-remove"><i class="fa fa-close" aria-hidden="true"></i></span>
-                            <span class="badge">Mango</span>
-                            <h6>Button Through Strap Mini Dress</h6>
-                            <p class="size">Size: S</p>
-                            <p class="color">Color: Red</p>
-                            <p class="price">$45.00</p>
-                        </div>
-                    </a>
-                </div>
-
-                <!-- Single Cart Item -->
-                <div class="single-cart-item">
-                    <a href="#" class="product-image">
-                        <img src="img/product-img/product-2.jpg" class="cart-thumb" alt="">
-                        <!-- Cart Item Desc -->
-                        <div class="cart-item-desc">
-                          <span class="product-remove"><i class="fa fa-close" aria-hidden="true"></i></span>
-                            <span class="badge">Mango</span>
-                            <h6>Button Through Strap Dress</h6>
-                            <p class="size">Size: S</p>
-                            <p class="color">Color: Red</p>
-                            <p class="price">$45.00</p>
-                        </div>
-                    </a>
-                </div>
-
-                <!-- Single Cart Item -->
-                <div class="single-cart-item">
-                    <a href="#" class="product-image">
-                        <img src="img/product-img/product-3.jpg" class="cart-thumb" alt="">
-                        <!-- Cart Item Desc -->
-                        <div class="cart-item-desc">
-                          <span class="product-remove"><i class="fa fa-close" aria-hidden="true"></i></span>
-                            <span class="badge">Mango</span>
-                            <h6>Button Through Strap Mini Dress</h6>
-                            <p class="size">Size: S</p>
-                            <p class="color">Color: Red</p>
-                            <p class="price">$45.00</p>
+                            <span class="badge">{{basketProduct.brand}}</span>
+                            <h6>{{basketProduct.title}}</h6>
+                            <p class="size">Размер: {{basketProduct.sizes[0].size}}</p>
+                            <p class="color">Цвет: {{basketProduct.color}}</p>
+                            <p class="price">${{basketProduct.price}}</p>
                         </div>
                     </a>
                 </div>
@@ -160,7 +129,7 @@
         </div>
     </div>
     <!-- ##### Right Side Cart End ##### -->
-
+    
     <!-- ##### Single Product Details Area Start ##### -->
     <section class="single_product_details_area d-flex align-items-center">
 
@@ -181,7 +150,7 @@
             <p class="product-desc">{{product.description}}</p>
 
             <!-- Form -->
-            <form class="cart-form clearfix" method="post">
+            <div class="cart-form clearfix">
                 <!-- Select Box -->
                 <div class="product-sorting d-flex dropdown select-size">
 				  <p><b>Размер:</b> {{selectSize}} <i style="margin-left:110px" class="fa fa-angle-down" aria-hidden="true"></i></p>
@@ -192,13 +161,13 @@
                 <!-- Cart & Favourite Box -->
                 <div class="cart-fav-box d-flex align-items-center">
                     <!-- Cart -->
-                    <button type="submit" name="addtocart" value="5" class="btn essence-btn">В корзину</button>
+                    <button @click="addBasket" class="btn essence-btn">В корзину</button>
                     <!-- Favourite -->
                     <div class="product-favourite ml-4">
-                        <a @click="setSelectSize()" class="favme fa fa-heart"></a>
+                        <a class="favme fa fa-heart"></a>
                     </div>
                 </div>
-            </form>
+            </div>
         </div>
     </section>
     <!-- ##### Single Product Details Area End ##### -->
@@ -299,19 +268,39 @@
 	  el: "#product",
 	  data:{
 		product:{},
-		selectSize:""
+		selectSize:"",
+		showBasket: false
 	  },
 	  mounted() {
 	    const jsonStr = localStorage.getItem("shop-data-product");
 		this.product = JSON.parse(jsonStr);
 		this.selectSize = this.product.sizes[0].size;
 	  },
-	  computed: {},
-	   methods:{
+	  computed: {
+	    basketProducts: function(){
+		  if(this.showBasket){
+		    const jsonStr = localStorage.getItem("shop-data-basket");
+		    return JSON.parse(jsonStr);
+		  }else return [];
+		}
+	  },
+	  methods:{
 	     setSelectSize: function(select){
 		   this.selectSize = select;
-		 }
-	   }
+		 },
+		addBasket: function(){
+		  let products = [];
+		  this.product.sizes = [{size:this.selectSize}];
+		  const jsonStr = localStorage.getItem("shop-data-basket");
+		  if(jsonStr){
+		    products = JSON.parse(jsonStr);
+			products.push(this.product);
+		  }else{
+		    products[0] = this.product;
+		  }
+		  localStorage.setItem("shop-data-basket", JSON.stringify(products));
+		},
+	  }
 	});
 	</script>
 </body>
