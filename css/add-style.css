@@ -44,3 +44,8 @@ a:hover {
 .sort-click {
   color:#000000;
 }
+/*start => for sort by type*/
+.type-product label{
+  margin-left: 5px;
+  color: grey;
+}
