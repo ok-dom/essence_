@@ -62,17 +62,13 @@
                         <button type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
                     </form>
                 </div>
-                <!-- Favourite Area -->
-                <div class="favourite-area">
-                    <a><img src="img/core-img/heart.svg" alt=""></a>
-                </div>
                 <!-- User Login Info -->
                 <div class="user-login-info">
                     <a><img src="img/core-img/user.svg" alt=""></a>
                 </div>
                 <!-- Cart Area -->
                 <div class="cart-area">
-                    <a id="essenceCartBtn"><img src="img/core-img/bag.svg" alt=""> <span>3</span></a>
+					<a @click="showBasket = !showBasket"><img src="img/core-img/bag.svg" alt=""> <span>{{basket.length}}</span></a>
                 </div>
             </div>
 
@@ -81,13 +77,13 @@
     <!-- ##### Header Area End ##### -->
         
     <!-- ##### Right Side Cart Area ##### -->
-    <div class="cart-bg-overlay"></div>
+    <div class="cart-bg-overlay" :class="{'cart-bg-overlay-on':showBasket}"></div>
 
-    <div class="right-side-cart-area">
+    <div class="right-side-cart-area" :class="{'cart-on':showBasket}">
 
         <!-- Cart Button -->
         <div class="cart-button">
-            <a id="rightSideCart"><img src="img/core-img/bag.svg" alt=""> <span>3</span></a>
+			<a @click="showBasket = !showBasket"><img src="img/core-img/bag.svg" alt=""> <span>{{basket.length}}</span></a>
         </div>
 
         <div class="cart-content d-flex">
@@ -95,51 +91,19 @@
             <!-- Cart List Area -->
             <div class="cart-list">
                 <!-- Single Cart Item -->
-                <div class="single-cart-item">
-                    <a class="product-image">
-                        <img src="img/product-img/product-1.jpg" class="cart-thumb" alt="">
+                <div v-for="basketProduct in basket" :key="basketProduct.id" class="single-cart-item">
+                    <div class="product-image">
+                        <img :src="basketProduct.image" class="cart-thumb" alt="">
                         <!-- Cart Item Desc -->
                         <div class="cart-item-desc">
-                          <span class="product-remove"><i class="fa fa-close" aria-hidden="true"></i></span>
-                            <span class="badge">Mango</span>
-                            <h6>Мини-платье на пуговицах через ремешок</h6>
-                            <p class="size">Размер: S</p>
-                            <p class="color">Цвет: Красный</p>
-                            <p class="price">$45.00</p>
+                          <span class="product-remove"><a @click="delFromBasket(basketProduct)"><i class="fa fa-close" aria-hidden="true"></i></a></span>
+                            <span class="badge">{{basketProduct.brand}}</span>
+                            <h6>{{basketProduct.title}}</h6>
+                            <p class="size">Размер: {{basketProduct.sizes[0].size}}</p>
+                            <p class="color">Цвет: {{basketProduct.color}}</p>
+                            <p class="price">${{basketProduct.price}}</p>
                         </div>
-                    </a>
-                </div>
-
-                <!-- Single Cart Item -->
-                <div class="single-cart-item">
-                    <a class="product-image">
-                        <img src="img/product-img/product-2.jpg" class="cart-thumb" alt="">
-                        <!-- Cart Item Desc -->
-                        <div class="cart-item-desc">
-                          <span class="product-remove"><i class="fa fa-close" aria-hidden="true"></i></span>
-                            <span class="badge">Mango</span>
-                            <h6>Мини-платье на пуговицах через ремешок</h6>
-                            <p class="size">Размер: S</p>
-                            <p class="color">Цвет: Красный</p>
-                            <p class="price">$45.00</p>
-                        </div>
-                    </a>
-                </div>
-
-                <!-- Single Cart Item -->
-                <div class="single-cart-item">
-                    <a class="product-image">
-                        <img src="img/product-img/product-3.jpg" class="cart-thumb" alt="">
-                        <!-- Cart Item Desc -->
-                        <div class="cart-item-desc">
-                          <span class="product-remove"><i class="fa fa-close" aria-hidden="true"></i></span>
-                            <span class="badge">Mango</span>
-                            <h6>Мини-платье на пуговицах через ремешок</h6>
-                            <p class="size">Размер: S</p>
-                            <p class="color">Цвет: Красный</p>
-                            <p class="price">$45.00</p>
-                        </div>
-                    </a>
+                    </div>
                 </div>
             </div>
 
@@ -233,7 +197,7 @@
 								<ul>
 								  <li @click="sortType('')">
 									<input type="radio" id="t-all" name="selector" :checked="checked">
-									<label for="t-all">Все</label>
+									<label for="t-all" style="padding:3px;">Все</label>
 								  </li>
 								  <li v-if="isType.isTypeMan" @click="sortType('Мужская')">
 									<input type="radio" id="t-man" name="selector">
@@ -310,29 +274,23 @@
 
                         <div class="row">
 
-                          <!-- Single Product -->
+                          <!-- START Single Product -->
                             <div v-for="product in showProducts" :key="product.id" class="col-12 col-sm-6 col-lg-4">
                                 <div class="single-product-wrapper">
                                     <!-- Product Image -->
+									<a href="product-details.html" @click="saveProductInStore(product)">
                                     <div class="product-img">
                                         <img :src="product.image" alt="">
-
                                         <!-- Product Badge -->
                                         <div v-if="product.oldPrice > 0" class="product-badge offer-badge">
                                             <span>{{descount(product.oldPrice, product.price)}}%</span>
                                         </div>
-								
 								        <!-- Product Badge -->
                                         <div v-if="nev(product.new)" class="product-badge new-badge">
                                             <span>Новый</span>
                                         </div>
-
-                                        <!-- Favourite -->
-                                        <div class="product-favourite">
-                                            <a class="favme fa fa-heart"></a>
-                                        </div>
                                     </div>
-
+									</a>
                                     <!-- Product Description -->
                                     <div class="product-description">
                                         <span>{{product.brand}}</span>
@@ -340,18 +298,10 @@
                                             <h6 @click="saveProductInStore(product)">{{product.title}}</h6>
                                         </a>
                                         <p class="product-price"><span class="old-price">${{product.oldPrice}}</span> ${{product.price}}</p>
-
-                                        <!-- Hover Content -->
-                                        <div class="hover-content">
-                                            <!-- Add to Cart -->
-                                            <div class="add-to-cart-btn">
-                                                <a @click="addBasket(product)" class="btn essence-btn" style="color:white">В корзину</a>
-                                            </div>
-                                        </div>
                                     </div>
                                 </div>
                             </div>
-
+                          <!-- END Single Product -->
                         </div>
                     </div>
                     <!-- Pagination -->
@@ -487,12 +437,18 @@
 		  isTypeWoman:false,
 		  isTypeBaby:false
 		},
+		showBasket:false,
+		basket:[]
 	  },
 	  mounted() {
-	    const jsonStr = localStorage.getItem("shop-data");
-		this.settings = JSON.parse(jsonStr).settings;
-		this.products = JSON.parse(jsonStr).products;
+	    const jsonData = localStorage.getItem("shop-data");
+		this.settings = JSON.parse(jsonData).settings;
+		this.products = JSON.parse(jsonData).products;
 		this.currentProducts = this.products.filter(product => product.category === this.category);
+		const jsonBasket = localStorage.getItem("shop-data-basket");
+		if(jsonBasket){
+		  this.basket = JSON.parse(jsonBasket);
+		}
 		if(!this.clothingTitle.length || !this.shoesTitle.length || !this.accessoriesTitle.length){
 		  this.products.forEach((item) => {
 		    if(item.category == "ОДЕЖДА"){
@@ -659,16 +615,11 @@
 		saveProductInStore: function(product){
 		  localStorage.setItem("shop-data-product", JSON.stringify(product));
 		},
-		addBasket: function(product){
-		  let products = [];
-		  const jsonStr = localStorage.getItem("shop-data-basket");
-		  if(jsonStr){
-		    products = JSON.parse(jsonStr);
-			products.push(product);
-		  }else{
-		    products[0] = product;
-		  }
-		  localStorage.setItem("shop-data-basket", JSON.stringify(products));
+		delFromBasket: function(basketProduct){
+		  const jsonBasket = localStorage.getItem("shop-data-basket");
+		  this.basket = JSON.parse(jsonBasket);
+	      this.basket = this.basket.filter(product => product.id !== basketProduct.id);
+		  localStorage.setItem("shop-data-basket", JSON.stringify(this.basket));
 		},
 	  }
 	});

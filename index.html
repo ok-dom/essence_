@@ -15,12 +15,14 @@
 
     <!-- Core Style CSS -->
     <link rel="stylesheet" href="css/core-style.css">
+	<link rel="stylesheet" href="css/add-style.css">
     <link rel="stylesheet" href="style.css">
 	<script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
 
 </head>
 
 <body>
+    <div id="home">
     <!-- ##### Header Area Start ##### -->
     <header class="header_area">
         <div class="classy-nav-container breakpoint-off d-flex align-items-center justify-content-between">
@@ -59,32 +61,28 @@
                         <button type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
                     </form>
                 </div>
-                <!-- Favourite Area -->
-                <div class="favourite-area">
-                    <a href="#"><img src="img/core-img/heart.svg" alt=""></a>
-                </div>
                 <!-- User Login Info -->
                 <div class="user-login-info">
                     <a href="#"><img src="img/core-img/user.svg" alt=""></a>
                 </div>
                 <!-- Cart Area -->
                 <div class="cart-area">
-                    <a href="#" id="essenceCartBtn"><img src="img/core-img/bag.svg" alt=""> <span>3</span></a>
+					<a @click="showBasket = !showBasket"><img src="img/core-img/bag.svg" alt=""> <span>{{basket.length}}</span></a>
                 </div>
             </div>
 
         </div>
     </header>
     <!-- ##### Header Area End ##### -->
-    <div id="home">
+    
     <!-- ##### Right Side Cart Area ##### -->
-    <div class="cart-bg-overlay"></div>
+    <div class="cart-bg-overlay" :class="{'cart-bg-overlay-on':showBasket}"></div>
 
-    <div class="right-side-cart-area">
+    <div class="right-side-cart-area" :class="{'cart-on':showBasket}">
 
         <!-- Cart Button -->
         <div class="cart-button">
-            <a href="#" id="rightSideCart"><img src="img/core-img/bag.svg" alt=""> <span>3</span></a>
+            <a @click="showBasket = !showBasket"><img src="img/core-img/bag.svg" alt=""> <span>{{basket.length}}</span></a>
         </div>
 
         <div class="cart-content d-flex">
@@ -92,51 +90,19 @@
             <!-- Cart List Area -->
             <div class="cart-list">
                 <!-- Single Cart Item -->
-                <div class="single-cart-item">
-                    <a href="#" class="product-image">
-                        <img src="img/product-img/product-1.jpg" class="cart-thumb" alt="">
+                <div v-for="basketProduct in basket" :key="basketProduct.id" class="single-cart-item">
+                    <div class="product-image">
+                        <img :src="basketProduct.image" class="cart-thumb" alt="">
                         <!-- Cart Item Desc -->
                         <div class="cart-item-desc">
-                          <span class="product-remove"><i class="fa fa-close" aria-hidden="true"></i></span>
-                            <span class="badge">Mango</span>
-                            <h6>Мини-платье на пуговицах через ремешок</h6>
-                            <p class="size">Размер: S</p>
-                            <p class="color">Цвет: Красный</p>
-                            <p class="price">$45.00</p>
+                          <span class="product-remove"><a @click="delFromBasket(basketProduct)"><i class="fa fa-close" aria-hidden="true"></i></a></span>
+                            <span class="badge">{{basketProduct.brand}}</span>
+                            <h6>{{basketProduct.title}}</h6>
+                            <p class="size">Размер: {{basketProduct.sizes[0].size}}</p>
+                            <p class="color">Цвет: {{basketProduct.color}}</p>
+                            <p class="price">${{basketProduct.price}}</p>
                         </div>
-                    </a>
-                </div>
-
-                <!-- Single Cart Item -->
-                <div class="single-cart-item">
-                    <a href="#" class="product-image">
-                        <img src="img/product-img/product-2.jpg" class="cart-thumb" alt="">
-                        <!-- Cart Item Desc -->
-                        <div class="cart-item-desc">
-                          <span class="product-remove"><i class="fa fa-close" aria-hidden="true"></i></span>
-                            <span class="badge">Mango</span>
-                            <h6>Мини-платье на пуговицах через ремешок</h6>
-                            <p class="size">Размер: S</p>
-                            <p class="color">Цвет: Красный</p>
-                            <p class="price">$45.00</p>
-                        </div>
-                    </a>
-                </div>
-
-                <!-- Single Cart Item -->
-                <div class="single-cart-item">
-                    <a href="#" class="product-image">
-                        <img src="img/product-img/product-3.jpg" class="cart-thumb" alt="">
-                        <!-- Cart Item Desc -->
-                        <div class="cart-item-desc">
-                          <span class="product-remove"><i class="fa fa-close" aria-hidden="true"></i></span>
-                            <span class="badge">Mango</span>
-                            <h6>Мини-платье на пуговицах через ремешок</h6>
-                            <p class="size">Размер: S</p>
-                            <p class="color">Цвет: Красный</p>
-                            <p class="price">$45.00</p>
-                        </div>
-                    </a>
+                    </div>
                 </div>
             </div>
 
@@ -539,7 +505,9 @@
 	  el: "#home",
 	  data:{
 	    settings:{},
-		popular:[]
+		popular:[],
+		showBasket:false,
+		basket:[]
 	  },
 	  methods: {
         increment(){}
@@ -551,7 +519,10 @@
 	      const jsonStr = localStorage.getItem("shop-data");
 		  this.settings = JSON.parse(jsonStr).settings;
 		  this.popular = JSON.parse(jsonStr).products.filter(product => product.popular);
-		  console.log(this.popular);
+		  const jsonBasket = localStorage.getItem("shop-data-basket");
+		  if(jsonBasket){
+			this.basket = JSON.parse(jsonBasket);
+	      }
 	  },
 	  computed: {
 	   descount: function () {
@@ -576,6 +547,14 @@
 		    }
 		  };
 	    }
+	  },
+	  methods:{
+	    delFromBasket: function(basketProduct){
+		  const jsonBasket = localStorage.getItem("shop-data-basket");
+		  this.basket = JSON.parse(jsonBasket);
+	      this.basket = this.basket.filter(product => product.id !== basketProduct.id);
+		  localStorage.setItem("shop-data-basket", JSON.stringify(this.basket));
+		},
 	  }
 	});
 	</script>
