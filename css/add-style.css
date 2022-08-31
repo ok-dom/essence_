@@ -48,4 +48,6 @@ a:hover {
 .type-product label{
   margin-left: 5px;
   color: grey;
+  cursor: pointer;
 }
+/**/
