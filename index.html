@@ -228,10 +228,6 @@
                                     <span>Новый</span>
                                 </div>
 
-                                <!-- Favourite -->
-                                <div class="product-favourite">
-                                    <a href="#" class="favme fa fa-heart"></a>
-                                </div>
                             </div>
                             <!-- Product Description -->
                             <div class="product-description">
@@ -240,14 +236,6 @@
                                     <h6>{{popular[0].title}}</h6>
                                 </a>
                                 <p class="product-price"><span v-if="popular[0].oldPrice > 0" class="old-price">${{popular[0].oldPrice}}</span> ${{popular[0].price}}</p>
-
-                                <!-- Hover Content -->
-                                <div class="hover-content">
-                                    <!-- Add to Cart -->
-                                    <div class="add-to-cart-btn">
-                                        <a href="#" class="btn essence-btn">В корзину</a>
-                                    </div>
-                                </div>
                             </div>
                         </div>
 						<!-- Single Product 2 -->
@@ -268,10 +256,6 @@
                                     <span>Новый</span>
                                 </div>
 
-                                <!-- Favourite -->
-                                <div class="product-favourite">
-                                    <a href="#" class="favme fa fa-heart"></a>
-                                </div>
                             </div>
                             <!-- Product Description -->
                             <div class="product-description">
@@ -280,14 +264,6 @@
                                     <h6>{{popular[1].title}}</h6>
                                 </a>
                                 <p class="product-price"><span v-if="popular[1].oldPrice > 0" class="old-price">${{popular[1].oldPrice}}</span> ${{popular[1].price}}</p>
-
-                                <!-- Hover Content -->
-                                <div class="hover-content">
-                                    <!-- Add to Cart -->
-                                    <div class="add-to-cart-btn">
-                                        <a href="#" class="btn essence-btn">В корзину</a>
-                                    </div>
-                                </div>
                             </div>
                         </div>
 						<!-- Single Product 3 -->
@@ -308,10 +284,6 @@
                                     <span>Новый</span>
                                 </div>
 
-                                <!-- Favourite -->
-                                <div class="product-favourite">
-                                    <a href="#" class="favme fa fa-heart"></a>
-                                </div>
                             </div>
                             <!-- Product Description -->
                             <div class="product-description">
@@ -320,14 +292,6 @@
                                     <h6>{{popular[2].title}}</h6>
                                 </a>
                                 <p class="product-price"><span v-if="popular[2].oldPrice > 0" class="old-price">${{popular[2].oldPrice}}</span> ${{popular[2].price}}</p>
-
-                                <!-- Hover Content -->
-                                <div class="hover-content">
-                                    <!-- Add to Cart -->
-                                    <div class="add-to-cart-btn">
-                                        <a href="#" class="btn essence-btn">В корзину</a>
-                                    </div>
-                                </div>
                             </div>
                         </div>
 						<!-- Single Product 4 -->
@@ -348,10 +312,6 @@
                                     <span>Новый</span>
                                 </div>
 
-                                <!-- Favourite -->
-                                <div class="product-favourite">
-                                    <a href="#" class="favme fa fa-heart"></a>
-                                </div>
                             </div>
                             <!-- Product Description -->
                             <div class="product-description">
@@ -360,14 +320,6 @@
                                     <h6>{{popular[3].title}}</h6>
                                 </a>
                                 <p class="product-price"><span v-if="popular[3].oldPrice > 0" class="old-price">${{popular[3].oldPrice}}</span> ${{popular[3].price}}</p>
-
-                                <!-- Hover Content -->
-                                <div class="hover-content">
-                                    <!-- Add to Cart -->
-                                    <div class="add-to-cart-btn">
-                                        <a href="#" class="btn essence-btn">В корзину</a>
-                                    </div>
-                                </div>
                             </div>
                         </div>
 						
@@ -523,6 +475,7 @@
 		  if(jsonBasket){
 			this.basket = JSON.parse(jsonBasket);
 	      }
+		  setInterval(() => this.popular.sort(() => Math.random() - 0.5), 3000);
 	  },
 	  computed: {
 	   descount: function () {

@@ -19,7 +19,6 @@
 	<link rel="stylesheet" href="css/add-style.css">
     <link rel="stylesheet" href="style.css">
 	<script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
-
 </head>
 
 <body>
@@ -111,15 +110,15 @@
             <!-- Cart Summary -->
             <div class="cart-amount-summary">
 
-                <h2>Summary</h2>
+                <h2>Детали заказа</h2>
                 <ul class="summary-table">
-                    <li><span>subtotal:</span> <span>$274.00</span></li>
-                    <li><span>delivery:</span> <span>Free</span></li>
+                    <li><span>Сумма:</span> <span>$274.00</span></li>
+                    <li><span>Доставка:</span> <span>Free</span></li>
                     <li><span>discount:</span> <span>-15%</span></li>
-                    <li><span>total:</span> <span>$232.00</span></li>
+                    <li><span>ИТОГО:</span> <span>$232.00</span></li>
                 </ul>
                 <div class="checkout-btn mt-100">
-                    <a href="checkout.html" class="btn essence-btn">check out</a>
+                    <a href="checkout.html" class="btn essence-btn">Оформить</a>
                 </div>
             </div>
         </div>
@@ -148,7 +147,7 @@
             <!-- Form -->
             <div class="cart-form clearfix">
 			    <!-- Select Box -->
-                <div class="product-sorting d-flex dropdown select-size">
+				<div class="product-sorting d-flex dropdown select-size">
 				  <p><b>Размер:</b> {{selectSize}} <i style="margin-left:110px" class="fa fa-angle-down" aria-hidden="true"></i></p>
 				  <div class="dropdown-content">
 					  <a v-for="item in product.sizes" :key="item.size" @click="setSelectSize(item.size)">{{item.size}}</a>
@@ -229,12 +228,12 @@
                 </div>
             </div>
 
-<div class="row mt-5">
+            <div class="row mt-5">
                 <div class="col-md-12 text-center">
                     <p>
                         <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-    Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
-    <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                        Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+                        <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
                     </p>
                 </div>
             </div>
