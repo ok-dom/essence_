@@ -47,7 +47,26 @@
         });
     }
 
-    //i am delete => :: Header Cart Active Code
+    // :: Header Cart Active Code
+    var cartbtn1 = $('#essenceCartBtn');
+    var cartOverlay = $(".cart-bg-overlay");
+    var cartWrapper = $(".right-side-cart-area");
+    var cartbtn2 = $("#rightSideCart");
+    var cartOverlayOn = "cart-bg-overlay-on";
+    var cartOn = "cart-on";
+
+    cartbtn1.on('click', function () {
+        cartOverlay.toggleClass(cartOverlayOn);
+        cartWrapper.toggleClass(cartOn);
+    });
+    cartOverlay.on('click', function () {
+        $(this).removeClass(cartOverlayOn);
+        cartWrapper.removeClass(cartOn);
+    });
+    cartbtn2.on('click', function () {
+        cartOverlay.removeClass(cartOverlayOn);
+        cartWrapper.removeClass(cartOn);
+    });
 
     // :: ScrollUp Active Code
     if ($.fn.scrollUp) {
@@ -72,8 +91,28 @@
         $('select').niceSelect();
     }
 
-    //i am delete =>  :: Slider Range Price Active Code
-    
+    // :: Slider Range Price Active Code
+    $('.slider-range-price').each(function () {
+        var min = jQuery(this).data('min');
+        var max = jQuery(this).data('max');
+        var unit = jQuery(this).data('unit');
+        var value_min = jQuery(this).data('value-min');
+        var value_max = jQuery(this).data('value-max');
+        var label_result = jQuery(this).data('label-result');
+        var t = $(this);
+        $(this).slider({
+            range: true,
+            min: min,
+            max: max,
+            values: [value_min, value_max],
+            slide: function (event, ui) {
+                var result = label_result + " " + unit + ui.values[0] + ' - ' + unit + ui.values[1];
+                console.log(t);
+                t.closest('.slider-range').find('.range-price').html(result);
+            }
+        });
+    });
+
     // :: Favorite Button Active Code
     var favme = $(".favme");
 
