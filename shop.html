@@ -8,136 +8,42 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <!-- The above 4 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <!-- Title  -->
-    <title>Essence - магазин одежды</title>
-
+    <title>Essence - Fashion Ecommerce Template</title>
     <!-- Favicon  -->
     <link rel="icon" href="img/core-img/favicon.ico">
-
     <!-- Core Style CSS -->
     <link rel="stylesheet" href="css/core-style.css">
-	<link rel="stylesheet" href="css/add-style.css">
     <link rel="stylesheet" href="style.css">
 	<script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
-
+	<script src="components/vue-header.js"></script>
+	<script src="components/vue-filters.js"></script>
+	<script src="components/vue-sorting.js"></script>
+	<script src="components/vue-basket.js"></script>
+	<script src="components/vue-product.js"></script>
+	<script src="components/vue-footer.js"></script>
 </head>
 
 <body>
     <div id="shop">
     <!-- ##### Header Area Start ##### -->
-    <header class="header_area">
-        <div class="classy-nav-container breakpoint-off d-flex align-items-center justify-content-between">
-            <!-- Classy Menu -->
-            <nav class="classy-navbar" id="essenceNav">
-                <!-- Logo -->
-                <a class="nav-brand" href="index.html"><img src="img/core-img/logo.png" alt=""></a>
-                <!-- Navbar Toggler -->
-                <div class="classy-navbar-toggler">
-                    <span class="navbarToggler"><span></span><span></span><span></span></span>
-                </div>
-                <!-- Menu -->
-                <div class="classy-menu">
-                    <!-- close btn -->
-                    <div class="classycloseIcon">
-                        <div class="cross-wrap"><span class="top"></span><span class="bottom"></span></div>
-                    </div>
-                    <!-- Nav Start -->
-                    <div class="classynav">
-                        <ul>
-                            <li><a href="index.html">Главная</a></li>
-                            <li><a href="shop.html">Магазин</a></li>
-                            <li><a href="blog.html">Блог</a></li>
-                            <li><a href="contact.html">Контакты</a></li>
-                        </ul>
-                    </div>
-                    <!-- Nav End -->
-                </div>
-            </nav>
-
-            <!-- Header Meta Data -->
-            <div class="header-meta d-flex clearfix justify-content-end">
-                <!-- Search Area -->
-                <div class="search-area">
-                    <form action="#" method="post">
-                        <input type="search" name="search" id="headerSearch" placeholder="Поиск">
-                        <button type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
-                    </form>
-                </div>
-                <!-- User Login Info -->
-                <div class="user-login-info">
-                    <a><img src="img/core-img/user.svg" alt=""></a>
-                </div>
-                <!-- Cart Area -->
-                <div class="cart-area">
-					<a @click="showBasket = !showBasket"><img src="img/core-img/bag.svg" alt=""> <span>{{basket.length}}</span></a>
-                </div>
-            </div>
-
-        </div>
-    </header>
+    <v-header :quantity="5" @onopenbasket="showBasket = true" @onsearch="onSearch"></v-header>
     <!-- ##### Header Area End ##### -->
-        
+	
     <!-- ##### Right Side Cart Area ##### -->
     <div class="cart-bg-overlay" :class="{'cart-bg-overlay-on':showBasket}"></div>
-
     <div class="right-side-cart-area" :class="{'cart-on':showBasket}">
-
         <!-- Cart Button -->
-        <div class="cart-button">
-			<a @click="showBasket = !showBasket"><img src="img/core-img/bag.svg" alt=""> <span>{{basket.length}}</span></a>
-        </div>
-
-        <div class="cart-content d-flex">
-
-            <!-- Cart List Area -->
-            <div class="cart-list">
-                <!-- Single Cart Item -->
-                <div v-for="basketProduct in basket" :key="basketProduct.id" class="single-cart-item">
-                    <div class="product-image">
-                        <img :src="basketProduct.image" class="cart-thumb" alt="">
-                        <!-- Cart Item Desc -->
-                        <div class="cart-item-desc">
-                          <span class="product-remove"><a @click="delFromBasket(basketProduct)"><i class="fa fa-close" aria-hidden="true"></i></a></span>
-                            <span class="badge">{{basketProduct.brand}}</span>
-                            <h6>{{basketProduct.title}}</h6>
-                            <p class="size">Размер: {{basketProduct.sizes[0].size}}</p>
-                            <p class="color">Цвет: {{basketProduct.color}}</p>
-                            <p class="price">${{basketProduct.price}}</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Cart Summary -->
-            <div class="cart-amount-summary">
-
-                <h2>Резюме</h2>
-                <ul class="summary-table">
-                    <li><span>subtotal:</span> <span>$274.00</span></li>
-                    <li><span>delivery:</span> <span>Free</span></li>
-                    <li><span>discount:</span> <span>-15%</span></li>
-                    <li><span>total:</span> <span>$232.00</span></li>
-                </ul>
-                <div class="checkout-btn mt-100">
-                    <a href="checkout.html" class="btn essence-btn">check out</a>
-                </div>
-            </div>
-        </div>
+        <v-basket :basket="basket" @onclosebasket="showBasket = false"></v-basket>
     </div>
     <!-- ##### Right Side Cart End ##### -->
-        
+
     <!-- ##### Breadcumb Area Start ##### -->
     <div class="breadcumb_area bg-img" style="background-image: url(img/bg-img/breadcumb.jpg);">
         <div class="container h-100">
             <div class="row h-100 align-items-center">
                 <div class="col-12">
                     <div class="page-title text-center">
-                        <h3>
-						  <span style="color:grey; font-size:24px">{{category}}</span>
-						  <span v-show="subcategory" style="color:grey; font-size:22px"> > {{subcategory}}</span>
-						  <span v-show="type" style="color:grey; font-size:20px"> > {{type}}</span>
-						  <span v-show="color" style="color:grey; font-size:18px"> > {{color}}</span>
-						  <span v-show="brand" style="color:grey; font-size:16px"> > {{brand}}</span>
-						</h3>
+                        <h2>{{category}}</h2>
                     </div>
                 </div>
             </div>
@@ -149,107 +55,12 @@
     <section class="shop_grid_area section-padding-80">
         <div class="container">
             <div class="row">
-                <div class="col-12 col-md-4 col-lg-3">
-                    <div class="shop_sidebar_area">
-
-                        <!-- ##### Single Widget ##### -->
-                        <div class="widget catagory mb-50">
-                            <!-- Widget Title -->
-                            <h6 class="widget-title mb-30">Категории</h6>
-
-                            <!--  Catagories  -->
-                            <div class="catagories-menu">
-                                <ul id="menu-content2" class="menu-content collapse show">
-                                    <!-- Single Item -->
-                                    <li data-toggle="collapse" data-target="#clothing">
-                                        <a>одежда</a>
-                                        <ul class="sub-menu collapse show" id="clothing">
-                                            <li><a @click="sortCategory('ОДЕЖДА')">Все</a></li>
-                                            <li><a v-for="(item, i) in clothingTitle" :key="item" @click="sortSubcategory('ОДЕЖДА', item)" :style="subcategory === clothingTitle[i] ? { color: 'blue'} : {}">{{item}}</a></li>
-                                        </ul>
-                                    </li>
-                                    <!-- Single Item -->
-                                    <li data-toggle="collapse" data-target="#shoes" class="collapsed">
-                                        <a>обувь</a>
-                                        <ul class="sub-menu collapse" id="shoes">
-                                            <li><a @click="sortCategory('ОБУВЬ')">Все</a></li>
-                                            <li><a v-for="(item, i) in shoesTitle" :key="item" @click="sortSubcategory('ОБУВЬ', item)" :style="subcategory === shoesTitle[i] ? { color: 'blue'} : {}">{{item}}</a></li>
-                                        </ul>
-                                    </li>
-                                    <!-- Single Item -->
-                                    <li data-toggle="collapse" data-target="#accessories" class="collapsed">
-                                        <a>аксессуары</a>
-                                        <ul class="sub-menu collapse" id="accessories">
-                                            <li><a @click="sortCategory('АКСЕССУАРЫ')">Все</a></li>
-                                            <li><a v-for="(item, i) in accessoriesTitle" :key="item" @click="sortSubcategory('АКСЕССУАРЫ', item)" :style="subcategory === accessoriesTitle[i] ? { color: 'blue'} : {}">{{item}}</a></li>
-                                        </ul>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-
-                        <!-- ##### Single Widget ##### -->
-                        <div class="widget price mb-50">
-                            <!-- Widget Title -->
-                            <h6 class="widget-title mb-30">Сортировать</h6>
-							
-							<div v-if="isType.isTypeMan || isType.isTypeWoman || isType.isTypeBaby" class="type-product">
-								<ul>
-								  <li @click="sortType('')">
-									<input type="radio" id="t-all" name="selector" :checked="checked">
-									<label for="t-all" style="padding:3px;">Все</label>
-								  </li>
-								  <li v-if="isType.isTypeMan" @click="sortType('Мужская')">
-									<input type="radio" id="t-man" name="selector">
-									<label for="t-man">Мужская</label>
-								  </li>
-								  <li v-if="isType.isTypeWoman" @click="sortType('Женская')">
-									<input type="radio" id="t-woman" name="selector">
-									<label for="t-woman">Женская</label>
-								  </li>
-								  <li v-if="isType.isTypeBaby" @click="sortType('Детская')">
-									<input type="radio" id="t-baby" name="selector">
-									<label for="t-baby">Детская</label>
-								  </li>
-								</ul>
-							</div>
-                        </div>
-
-                        <!-- ##### Single Widget ##### -->
-                        <div class="widget color mb-50">
-                            <!-- Widget Title 2 -->
-                            <p class="widget-title2 mb-30">Цвет</p>
-                            <div class="widget-desc">
-                                <ul class="d-flex">
-                                    <li><a @click="sortColor('Белый')" class="color1" :style="color === 'Белый' ? { border: '3px solid blue'} : {}"></a></li>
-                                    <li><a @click="sortColor('Серый')" class="color2" :style="color === 'Серый' ? { border: '3px solid blue'} : {}"></a></li>
-                                    <li><a @click="sortColor('Черный')" class="color3" :style="color === 'Черный' ? { border: '3px solid blue'} : {}"></a></li>
-                                    <li><a @click="sortColor('Синий')" class="color4" :style="color === 'Синий' ? { border: '3px solid blue'} : {}"></a></li>
-                                    <li><a @click="sortColor('Красный')" class="color5" :style="color === 'Красный' ? { border: '3px solid blue'} : {}"></a></li>
-                                    <li><a @click="sortColor('Желтый')" class="color6" :style="color === 'Желтый' ? { border: '3px solid blue'} : {}"></a></li>
-                                    <li><a @click="sortColor('Оранжевый')" class="color7" :style="color === 'Оранжевый' ? { border: '3px solid blue'} : {}"></a></li>
-                                    <li><a @click="sortColor('Коричневый')" class="color8" :style="color === 'Коричневый' ? { border: '3px solid blue'} : {}"></a></li>
-                                    <li><a @click="sortColor('Зеленый')" class="color9" :style="color === 'Зеленый' ? { border: '3px solid blue'} : {}"></a></li>
-                                    <li><a @click="sortColor('Фиолетовый')" class="color10" :style="color === 'Фиолетовый' ? { border: '3px solid blue'} : {}"></a></li>
-                                </ul>
-                            </div>
-                        </div>
-
-                        <!-- ##### Single Widget ##### -->
-                        <div class="widget brands mb-50">
-                            <!-- Widget Title 2 -->
-                            <p class="widget-title2 mb-30">Бренды</p>
-                            <div class="widget-desc">
-                                <ul>
-                                    <li><a v-for="(item, i) in brandsTitle" :key="item" @click="sortBrands(item)" :style="brand === brandsTitle[i] ? { color: 'blue'} : {}">
-									{{item}}
-									</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
+                <v-filters :filters="filters"
+				  @onall="filterByCategory"
+				  @onsubcategory="filterBySubcategory"
+				  @oncolor="filterByColor"
+				  @onbrand="filterByBrand"
+				></v-filters>
                 <div class="col-12 col-md-8 col-lg-9">
                     <div class="shop_grid_product_area">
                         <div class="row">
@@ -257,61 +68,29 @@
                                 <div class="product-topbar d-flex align-items-center justify-content-between">
                                     <!-- Total Products -->
                                     <div class="total-products">
-                                        <p>Найдено <span>{{currentProducts.length}}</span></p>
+                                        <p>Найдено<span> {{currentProducts.length}} </span></p>
                                     </div>
                                     <!-- Sorting -->
-                                    <div class="product-sorting d-flex dropdown">
-									  <p>Выбрать: <span style="color:grey">{{selectText}}</span></p>
-									  <div class="dropdown-content">
-										  <a @click="selectAll()">Все</a>
-										  <a @click="selectNews()">Новейшие</a>
-										  <a @click="selectDiscounts()">Со скидками</a>
-									  </div>
-									</div>
+                                    <v-sorting></v-sorting>
                                 </div>
                             </div>
                         </div>
-
+						
                         <div class="row">
-
-                          <!-- START Single Product -->
-                            <div v-for="product in showProducts" :key="product.id" class="col-12 col-sm-6 col-lg-4">
-                                <div class="single-product-wrapper">
-                                    <!-- Product Image -->
-									<a href="product-details.html" @click="saveProductInStore(product)">
-                                    <div class="product-img">
-                                        <img :src="product.image" alt="">
-                                        <!-- Product Badge -->
-                                        <div v-if="product.oldPrice > 0" class="product-badge offer-badge">
-                                            <span>{{descount(product.oldPrice, product.price)}}%</span>
-                                        </div>
-								        <!-- Product Badge -->
-                                        <div v-if="nev(product.new)" class="product-badge new-badge">
-                                            <span>Новый</span>
-                                        </div>
-                                    </div>
-									</a>
-                                    <!-- Product Description -->
-                                    <div class="product-description">
-                                        <span>{{product.brand}}</span>
-                                        <a href="product-details.html">
-                                            <h6 @click="saveProductInStore(product)">{{product.title}}</h6>
-                                        </a>
-                                        <p class="product-price"><span class="old-price">${{product.oldPrice}}</span> ${{product.price}}</p>
-                                    </div>
-                                </div>
+                            <!-- Single Product -->
+                            <div v-for="item in currentProducts" :key="item.id" class="col-12 col-sm-6 col-lg-4">
+                                <v-product :product="item"></v-product>
                             </div>
-                          <!-- END Single Product -->
                         </div>
                     </div>
                     <!-- Pagination -->
                     <nav aria-label="navigation">
                         <ul class="pagination mt-50 mb-70">
-                            <li @click="pageDecrement" class="page-item"><a class="page-link"><i class="fa fa-angle-left"></i></a></li>
-                            <li class="page-item"><a class="page-link">{{page}}</a></li>
-                            <li class="page-item"><a class="page-link">...</a></li>
-                            <li class="page-item"><a class="page-link">{{pages}}</a></li>
-                            <li @click="pageIncrement" class="page-item"><a class="page-link"><i class="fa fa-angle-right"></i></a></li>
+                            <li class="page-item"><a class="page-link" href="#"><i class="fa fa-angle-left"></i></a></li>
+                            <li class="page-item"><a class="page-link" href="#">1</a></li>
+                            <li class="page-item"><a class="page-link" href="#">...</a></li>
+                            <li class="page-item"><a class="page-link" href="#">21</a></li>
+                            <li class="page-item"><a class="page-link" href="#"><i class="fa fa-angle-right"></i></a></li>
                         </ul>
                     </nav>
                 </div>
@@ -321,85 +100,9 @@
     <!-- ##### Shop Grid Area End ##### -->
 
     <!-- ##### Footer Area Start ##### -->
-    <footer class="footer_area clearfix">
-        <div class="container">
-            <div class="row">
-                <!-- Single Widget Area -->
-                <div class="col-12 col-md-6">
-                    <div class="single_widget_area d-flex mb-30">
-                        <!-- Logo -->
-                        <div class="footer-logo mr-50">
-                            <a><img src="img/core-img/logo2.png" alt=""></a>
-                        </div>
-                        <!-- Footer Menu -->
-                        <div class="footer_menu">
-                            <ul>
-                                <li><a href="shop.html">Магазин</a></li>
-                                <li><a href="blog.html">Блог</a></li>
-                                <li><a href="contact.html">Контакты</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <!-- Single Widget Area -->
-                <div class="col-12 col-md-6">
-                    <div class="single_widget_area mb-30">
-                        <ul class="footer_widget_menu">
-                            <li><a>Статус заказа</a></li>
-                            <li><a>Варианты оплаты</a></li>
-                            <li><a>Доставка</a></li>
-                            <li><a>Гиды</a></li>
-                            <li><a>Политика конфиденциальности</a></li>
-                            <li><a>Условия эксплуатации</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-
-            <div class="row align-items-end">
-                <!-- Single Widget Area -->
-                <div class="col-12 col-md-6">
-                    <div class="single_widget_area">
-                        <div class="footer_heading mb-30">
-                            <h6>Подписывайся</h6>
-                        </div>
-                        <div class="subscribtion_form">
-                            <form action="#" method="post">
-                                <input type="email" name="mail" class="mail" placeholder="Your email here">
-                                <button type="submit" class="submit"><i class="fa fa-long-arrow-right" aria-hidden="true"></i></button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-                <!-- Single Widget Area -->
-                <div class="col-12 col-md-6">
-                    <div class="single_widget_area">
-                        <div class="footer_social_area">
-                            <a data-toggle="tooltip" data-placement="top" title="Facebook"><i class="fa fa-facebook" aria-hidden="true"></i></a>
-                            <a data-toggle="tooltip" data-placement="top" title="Instagram"><i class="fa fa-instagram" aria-hidden="true"></i></a>
-                            <a data-toggle="tooltip" data-placement="top" title="Twitter"><i class="fa fa-twitter" aria-hidden="true"></i></a>
-                            <a data-toggle="tooltip" data-placement="top" title="Pinterest"><i class="fa fa-pinterest" aria-hidden="true"></i></a>
-                            <a data-toggle="tooltip" data-placement="top" title="Youtube"><i class="fa fa-youtube-play" aria-hidden="true"></i></a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-<div class="row mt-5">
-                <div class="col-md-12 text-center">
-                    <p>
-                        <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-    Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
-    <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                    </p>
-                </div>
-            </div>
-
-        </div>
-    </footer>
+    <v-footer></v-footer>
     <!-- ##### Footer Area End ##### -->
     </div>
-
     <!-- jQuery (Necessary for All JavaScript Plugins) -->
     <script src="js/jquery/jquery-2.2.4.min.js"></script>
     <!-- Popper js -->
@@ -412,217 +115,96 @@
     <script src="js/classy-nav.min.js"></script>
     <!-- Active js -->
     <script src="js/active.js"></script>
-	
-	<script>
-	new Vue({
-	  el: "#shop",
-	  data:{
-	    settings:{},
-		products:[],
-		clothingTitle:[],
-		shoesTitle:[],
-		accessoriesTitle:[],
-		brandsTitle:[],
-		currentProducts:[],
-		category:"ОДЕЖДА",
-		subcategory:"",
-		type:"",
-		color:"",
-		brand:"",
-		newe:false,
-		discount:false,
-		page:1,
-		isType:{
-		  isTypeMan:false,
-		  isTypeWoman:false,
-		  isTypeBaby:false
-		},
-		showBasket:false,
-		basket:[]
-	  },
-	  mounted() {
-	    const jsonData = localStorage.getItem("shop-data");
-		this.settings = JSON.parse(jsonData).settings;
-		this.products = JSON.parse(jsonData).products;
-		this.currentProducts = this.products.filter(product => product.category === this.category);
-		const jsonBasket = localStorage.getItem("shop-data-basket");
-		if(jsonBasket){
-		  this.basket = JSON.parse(jsonBasket);
-		}
-		if(!this.clothingTitle.length || !this.shoesTitle.length || !this.accessoriesTitle.length){
-		  this.products.forEach((item) => {
-		    if(item.category == "ОДЕЖДА"){
-			  if(!this.clothingTitle.includes(item.subcategory)){
-			    this.clothingTitle.push(item.subcategory);
-			  }
-			}
-			else if(item.category == "ОБУВЬ"){
-			  if(!this.shoesTitle.includes(item.subcategory)){
-			    this.shoesTitle.push(item.subcategory);
-			  }
-			}
-			else{
-			  if(!this.accessoriesTitle.includes(item.subcategory)){
-			    this.accessoriesTitle.push(item.subcategory);
-			  }
-			}
-			
-			if(!this.brandsTitle.includes(item.brand)){
-			  this.brandsTitle.push(item.brand);
-			}
-			
-			if(item.type){
-			  if(item.type === "Мужская" && !this.isType.isTypeMan){
-			    this.isType.isTypeMan = true;
-			  }
-			  else if(item.type === "Женская" && !this.isType.isTypeWoman){
-			    this.isType.isTypeWoman = true;
-			  }
-			  else if(item.type === "Детская" && !this.isType.isTypeBaby){
-			    this.isType.isTypeBaby = true;
-			  }
-			}
-          });
-		}
-	  },
-	  computed: {
-	   descount: function () {
-		  var vm = this;
-		  return function (oldPrice, newPrice) {
-			return Math.round((newPrice/oldPrice)*100);
-		  };
-	    },
-	   nev: function () {
-		  var vm = this;
-		  return function (old) {
-			if(old === 0){
-		      return false;
-		    } else {
-		      const now = Date.now();
-		      const time = (now - old) / 86400000;
-			  if(time > 30){
-			    return false;
-			  } else {
-			    return true;
-			  }
-		    }
-		  };
-	    },
-		showProducts: function () {
-		  return this.currentProducts.slice(this.page * 6 - 6, this.page * 6);
-		},
-		selectText: function(){
-		  return this.newe ? 'Новейшие' : this.discount ? 'Со скидками' : 'Все';
-		},
-		pages: function(){
-		  const pages = Math.ceil(this.currentProducts.length/6);
-		  if(pages)return pages;
-		  else return 1;
-		},
-		checked: function(){
-		  if(this.type) return false;
-		  else return true;
-		}
-	   },
-	   methods:{
-	    sortCategory: function(category){
-		  this.category = category;
-		  this.subcategory = "";
-		  this.type = "";
-		  this.color = "";
-		  this.brand = "";
-		  this.newe = false;
-		  this.discount = false;
+    <script src="store/products.js"></script>
+    <script>
+	  new Vue({
+        el: '#shop',
+        data: {
+		  products: storeProducts,
+		  currentProducts: [],
+		  basket: [],
+          showBasket: false,
+		  category: 'ОДЕЖДА',
+		  subcategory: '',
+		  color: '',
+		  brand: '',
+		  filters: {
+		    clothing: [],
+			shoes: [],
+			accessories: [],
+			colors: [],
+			brands: []
+		  }
+        },
+		mounted(){
 		  this.currentProducts = this.products.filter(product => product.category === this.category);
-		  this.page = 1;
+		  this.products.forEach(product => {
+		    if(product.category === 'ОДЕЖДА'){
+			  if(!this.filters.clothing.includes(product.subcategory)){
+			    this.filters.clothing.push(product.subcategory);
+			  }
+			}
+			else if(product.category === 'ОБУВЬ'){
+			  if(!this.filters.shoes.includes(product.subcategory)){
+			    this.filters.shoes.push(product.subcategory);
+			  }
+			}
+			else if(product.category === 'АКСЕССУАРЫ'){
+			  if(!this.filters.accessories.includes(product.subcategory)){
+			    this.filters.accessories.push(product.subcategory);
+			  }
+			}
+			if(!this.filters.brands.includes(product.brand)){
+			  this.filters.brands.push(product.brand);
+			}
+			if(!this.filters.colors.includes(product.color)){
+			  this.filters.colors.push(product.color);
+			}
+		  });
 		},
-	    sortSubcategory: function(category, subcategory){
-		  this.category = category;
-		  this.subcategory = subcategory;
-		  this.type = "";
-		  this.color = "";
-		  this.brand = "";
-		  this.newe = false;
-		  this.discount = false;
-		  this.currentProducts = this.products.filter(product => product.category === this.category && product.subcategory === this.subcategory);
-		  this.page = 1;
+		methods:{
+		  onSearch(search){
+		    console.log(search);
+		  },
+		  filterByCategory(category){
+		    this.category = category;
+		    this.subcategory = "";
+		    this.color = "";
+		    this.brand = "";
+			this.filter();
+		  },
+		  filterBySubcategory(category, subcategory){
+		    this.category = category;
+		    this.subcategory = subcategory;
+		    this.color = "";
+		    this.brand = "";
+			this.filter();
+		  },
+		  filterByColor(color){
+		    this.color = color;
+			this.filter();
+		  },
+		  filterByBrand(brand){
+		    this.brand = brand;
+			this.filter();
+		  },
+		  filter(){
+		    this.currentProducts = this.products;
+		    if(this.category){
+		      this.currentProducts = this.currentProducts.filter(product => product.category === this.category);
+		    }
+		    if(this.subcategory){
+		      this.currentProducts = this.currentProducts.filter(product => product.subcategory === this.subcategory);
+		    }
+		    if(this.color){
+		      this.currentProducts = this.currentProducts.filter(product => product.color === this.color);
+		    }
+		    if(this.brand){
+		      this.currentProducts = this.currentProducts.filter(product => product.brand === this.brand);
+		    }
+		  },
 		},
-		sortType: function(type){
-		  this.page = 1;
-		  this.type = type;
-		  this.sort();
-		},
-		sortBrands: function(brand){
-		  this.page = 1;
-		  this.brand = brand;
-		  this.sort();
-		},
-		sortColor: function(color){
-		  this.page = 1;
-		  this.color = color;
-		  this.sort();
-		},
-		selectNews: function(){
-		  this.page = 1;
-		  this.newe = true;
-		  this.discount = false;
-		  this.sort();
-		},
-		selectDiscounts: function(){
-		  this.page = 1;
-		  this.newe = false;
-		  this.discount = true;
-		  this.sort();
-		},
-		selectAll: function(){
-		  this.page = 1;
-		  this.newe = false;
-		  this.discount = false;
-		  this.sort();
-		},
-		sort: function(){
-		  this.currentProducts = this.products;
-		  if(this.category){
-		    this.currentProducts = this.currentProducts.filter(product => product.category === this.category);
-		  }
-		  if(this.subcategory){
-		    this.currentProducts = this.currentProducts.filter(product => product.subcategory === this.subcategory);
-		  }
-		  if(this.type){
-		    this.currentProducts = this.currentProducts.filter(product => product.type === this.type);
-		  }
-		  if(this.color){
-		    this.currentProducts = this.currentProducts.filter(product => product.color === this.color);
-		  }
-		  if(this.brand){
-		    this.currentProducts = this.currentProducts.filter(product => product.brand === this.brand);
-		  }
-		  if(this.newe){
-		    const now = Date.now();
-		    this.currentProducts = this.currentProducts.filter(product => ((now - product.new) / 86400000) < 30);
-		  }
-		  if(this.discount){
-		    this.currentProducts = this.currentProducts.filter(product => product.oldPrice > 0);
-		  }
-		},
-		pageIncrement: function(){
-		  const maxPages = Math.ceil(this.currentProducts.length/6);
-		  if(maxPages > this.page)this.page++;
-		},
-		pageDecrement: function(){
-		  if(1 < this.page)this.page--;
-		},
-		saveProductInStore: function(product){
-		  localStorage.setItem("shop-data-product", JSON.stringify(product));
-		},
-		delFromBasket: function(basketProduct){
-		  const jsonBasket = localStorage.getItem("shop-data-basket");
-		  this.basket = JSON.parse(jsonBasket);
-	      this.basket = this.basket.filter(product => product.id !== basketProduct.id);
-		  localStorage.setItem("shop-data-basket", JSON.stringify(this.basket));
-		},
-	  }
-	});
+      })
 	</script>
 </body>
 
